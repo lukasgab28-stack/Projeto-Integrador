@@ -31,6 +31,7 @@ Tecnologias utilizadas
 Javascript 
 
 # Licença 
-Este projeto é de uso livre para fins educacionais. 
+Este projeto é de uso livre para investimentos e vendas
+
 
  

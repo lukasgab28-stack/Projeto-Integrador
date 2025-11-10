@@ -21,7 +21,7 @@ Edite o conteúdo dentro das pastas conforme necessário.
 #Estrutura do Site 
 Automotors/ 
 - index.html 
--imagens 
+
 
  
 

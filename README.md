@@ -6,7 +6,7 @@ Automotors
 Compra e vendas de carros 
 
  EQUIPE 
-Lucas Gabriel Gonçalves 
+Lucas Gabriel Gonçalves ,
 Pedro Henrique klipp Cani,
 Murilo Rôza Bello ,
 Enzo Satiro   ,

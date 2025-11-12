@@ -19,8 +19,7 @@ Abra o arquivo "index.html" no navegador.
 Edite o conteúdo dentro das pastas conforme necessário. 
 
 #Estrutura do Site: 
-Automotors/ 
-- index.html 
+Automotors/index.html 
 
 
  

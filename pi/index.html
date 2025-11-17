@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Motors - Compra e Venda de Veículos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset e estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --secondary: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --success: #10b981;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e69500;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 10px auto;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .auth-buttons .btn {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Páginas */
+        .page {
+            display: none;
+            padding: 40px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(30, 64, 175, 0.8), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box select, .search-box input {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #e69500;
+        }
+
+        /* Destaques */
+        .featured {
+            padding: 80px 0;
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .car-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-image {
+            height: 200px;
+            width: 100%;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .car-info {
+            padding: 20px;
+        }
+
+        .car-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .car-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .car-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .car-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Como funciona */
+        .how-it-works {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            background-color: var(--light);
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* Vender carro */
+        .sell-car {
+            padding: 80px 0;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+
+        .sell-car .section-title {
+            color: white;
+        }
+
+        .sell-car .section-title:after {
+            background-color: var(--secondary);
+        }
+
+        .sell-car p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Depoimentos */
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .testimonials-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .testimonial {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 350px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Formulários */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Página de carros */
+        .filters {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .cars-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Página de financiamento */
+        .finance-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .finance-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .finance-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .calculator {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .calculator-result {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .calculator-result h3 {
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .auth-buttons {
+                margin-left: auto;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .featured, .how-it-works, .sell-car, .testimonials {
+                padding: 50px 0;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo" data-page="home">
+                <i class="fas fa-car"></i>
+                <div class="logo-text">Auto <span>Motors</span></div>
+            </a>
+            
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" data-page="home">Início</a></li>
+                    <li><a href="#" data-page="buy-car">Comprar Carro</a></li>
+                    <li><a href="#" data-page="sell-car">Vender Carro</a></li>
+                    <li><a href="#" data-page="financing">Financiamento</a></li>
+                    <li><a href="#" data-page="contact">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn" data-page="login">Entrar</a>
+                <a href="#" class="btn btn-secondary" data-page="register">Cadastrar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Páginas -->
+    <main>
+        <!-- Página Inicial -->
+        <section id="home" class="page active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <h1>Encontre o carro perfeito para você</h1>
+                        <p>Milhares de veículos novos e seminovos com as melhores condições do mercado</p>
+                        <a href="#" class="btn btn-secondary" data-page="buy-car">Ver Carros</a>
+                        
+                        <div class="search-box">
+                            <select>
+                                <option value="">Todas as Marcas</option>
+                                <option value="volkswagen">Volkswagen</option>
+                                <option value="fiat">Fiat</option>
+                                <option value="ford">Ford</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="toyota">Toyota</option>
+                            </select>
+                            
+                            <select>
+                                <option value="">Todos os Modelos</option>
+                                <option value="gol">Gol</option>
+                                <option value="onix">Onix</option>
+                                <option value="ka">Ka</option>
+                                <option value="uno">Uno</option>
+                                <option value="corolla">Corolla</option>
+                            </select>
+                            
+                            <select>
+                                <option value="">Todos os Anos</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                            </select>
+                            
+                            <input type="text" placeholder="Preço máximo">
+                            
+                            <button><i class="fas fa-search"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destaques -->
+            <section class="featured">
+                <div class="container">
+                    <h2 class="section-title">Carros em Destaque</h2>
+                    
+                    <div class="cars-grid">
+                        <!-- Carro 1 -->
+                        <div class="car-card">
+                            <div class="car-image" style="background-image: url('imagens/Volkswagen\ Golf\ GTI.webp')"></div>
+                            <div class="car-info">
+                                <h3 class="car-title">Volkswagen Golf GTI</h3>
+                                <div class="car-details">
+                                    <span><i class="fas fa-calendar-alt"></i> 2022</span>
+                                    <span><i class="fas fa-tachometer-alt"></i> 15.000 km</span>
+                                    <span><i class="fas fa-gas-pump"></i> Flex</span>
+                                </div>
+                                <div class="car-price">R$ 145.900</div>
+                                <div class="car-actions">
+                                    <a href="#" class="btn">Ver Detalhes</a>
+                                    <a href="#" class="btn btn-secondary">Favoritar</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Carro 2 -->
+                        <div class="car-card">
+                            <div class="car-image" style="background-image: url('imagens/toyotacorolla.webp')"></div>
+                            <div class="car-info">
+                                <h3 class="car-title">Toyota Corolla</h3>
+                                <div class="car-details">
+                                    <span><i class="fas fa-calendar-alt"></i> 2021</span>
+                                    <span><i class="fas fa-tachometer-alt"></i> 32.000 km</span>
+                                    <span><i class="fas fa-gas-pump"></i> Flex</span>
+                                </div>
+                                <div class="car-price">R$ 119.800</div>
+                                <div class="car-actions">
+                                    <a href="#" class="btn">Ver Detalhes</a>
+                                    <a href="#" class="btn btn-secondary">Favoritar</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Carro 3 -->
+                        <div class="car-card">
+                            <div class="car-image" style="background-image: url('imagens/Chevrolet\ Onix.webp')"></div>
+                            <div class="car-info">
+                                <h3 class="car-title">Chevrolet Onix</h3>
+                                <div class="car-details">
+                                    <span><i class="fas fa-calendar-alt"></i> 2023</span>
+                                    <span><i class="fas fa-tachometer-alt"></i> 8.000 km</span>
+                                    <span><i class="fas fa-gas-pump"></i> Flex</span>
+                                </div>
+                                <div class="car-price">R$ 78.500</div>
+                                <div class="car-actions">
+                                    <a href="#" class="btn">Ver Detalhes</a>
+                                    <a href="#" class="btn btn-secondary">Favoritar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <a href="#" class="btn" data-page="buy-car">Ver Todos os Carros</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Como funciona -->
+            <section class="how-it-works">
+                <div class="container">
+                    <h2 class="section-title">Como Funciona</h2>
+                    
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>Encontre seu carro</h3>
+                            <p>Use nossos filtros avançados para encontrar o veículo perfeito para suas necessidades.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <h3>Agende uma visita</h3>
+                            <p>Entre em contato com o vendedor e agende um horário para conhecer o veículo pessoalmente.</p>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <h3>Feche o negócio</h3>
+                            <p>Negocie diretamente com o vendedor e finalize a compra com toda segurança.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vender carro -->
+            <section class="sell-car">
+                <div class="container">
+                    <h2 class="section-title">Quer Vender Seu Carro?</h2>
+                    <p>Anuncie seu veículo na Auto Motors e alcance milhares de compradores em potencial. Processo simples, rápido e seguro.</p>
+                    <a href="#" class="btn btn-secondary" data-page="sell-car">Anunciar Meu Carro</a>
+                </div>
+            </section>
+
+            <!-- Depoimentos -->
+            <section class="testimonials">
+                <div class="container">
+                    <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
+                    
+                    <div class="testimonials-container">
+                        <div class="testimonial">
+                            <div class="testimonial-text">
+                                "Comprei meu primeiro carro pela Auto Motors e foi uma experiência incrível. Encontrei exatamente o que procurava com um preço justo."
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg')"></div>
+                                <div class="author-info">
+                                    <h4>Roberto Silva</h4>
+                                    <p>Comprador</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <div class="testimonial-text">
+                                "Vendi meu carro em apenas 3 dias através da Auto Motors. A plataforma é muito intuitiva e me conectou com compradores sérios."
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/women/44.jpg')"></div>
+                                <div class="author-info">
+                                    <h4>Mariana Costa</h4>
+                                    <p>Vendedora</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial">
+                            <div class="testimonial-text">
+                                "O processo de financiamento foi muito simples e rápido. Consegui comprar o carro dos meus sonhos com condições que cabiam no meu bolso."
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/76.jpg')"></div>
+                                <div class="author-info">
+                                    <h4>Carlos Oliveira</h4>
+                                    <p>Comprador</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Página Comprar Carro -->
+        <section id="buy-car" class="page">
+            <div class="container">
+                <h2 class="section-title">Encontre Seu Carro Ideal</h2>
+                
+                <div class="filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label>Marca</label>
+                            <select>
+                                <option value="">Todas as Marcas</option>
+                                <option value="volkswagen">Volkswagen</option>
+                                <option value="fiat">Fiat</option>
+                                <option value="ford">Ford</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="honda">Honda</option>
+                                <option value="hyundai">Hyundai</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Modelo</label>
+                            <select>
+                                <option value="">Todos os Modelos</option>
+                                <option value="gol">Gol</option>
+                                <option value="onix">Onix</option>
+                                <option value="ka">Ka</option>
+                                <option value="uno">Uno</option>
+                                <option value="corolla">Corolla</option>
+                                <option value="civic">Civic</option>
+                                <option value="hb20">HB20</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Ano</label>
+                            <select>
+                                <option value="">Todos os Anos</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-row">
+                        <div class="filter-group">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ,
+                            <label>Preço Mínimo</label>
+                            <input type="number" placeholder="R$ 0">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Preço Máximo</label>
+                            <input type="number" placeholder="R$ 500.000">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Combustível</label>
+                            <select>
+                                <option value="">Todos</option>
+                                <option value="gasolina">Gasolina</option>
+                                <option value="alcool">Álcool</option>
+                                <option value="flex">Flex</option>
+                                <option value="diesel">Diesel</option>
+                                <option value="eletrico">Elétrico</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" style="width: 100%; margin-top: 10px;">
+                        <i class="fas fa-search"></i> Aplicar Filtros
+                    </button>
+                </div>
+                
+                <div class="cars-list">
+                    <!-- Carro 1 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/Volkswagen\ Golf\ GTI.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Volkswagen Golf GTI</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2022</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 15.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 145.900</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carro 2 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/toyotacorolla.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Toyota Corolla</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2021</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 32.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 119.800</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carro 3 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/Chevrolet\ Onix.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Chevrolet Onix</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2023</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 8.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 78.500</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carro 4 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/Ford\ Ka.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Ford Ka</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2020</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 45.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 52.900</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carro 5 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/Fiat\ Uno.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Fiat Uno</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2019</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 60.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 42.500</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Carro 6 -->
+                    <div class="car-card">
+                        <div class="car-image" style="background-image: url('imagens/Honda\ Civic.webp')"></div>
+                        <div class="car-info">
+                            <h3 class="car-title">Honda Civic</h3>
+                            <div class="car-details">
+                                <span><i class="fas fa-calendar-alt"></i> 2022</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 22.000 km</span>
+                                <span><i class="fas fa-gas-pump"></i> Flex</span>
+                            </div>
+                            <div class="car-price">R$ 135.000</div>
+                            <div class="car-actions">
+                                <a href="#" class="btn">Ver Detalhes</a>
+                                <a href="#" class="btn btn-secondary">Favoritar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn">Carregar Mais Carros</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página Vender Carro -->
+        <section id="sell-car" class="page">
+            <div class="container">
+                <h2 class="section-title">Anuncie Seu Carro</h2>
+                
+                <div class="form-container">
+                    <form id="sell-car-form">
+                        <div class="form-group">
+                            <label for="car-brand">Marca do Veículo</label>
+                            <select id="car-brand" required>
+                                <option value="">Selecione a marca</option>
+                                <option value="volkswagen">Volkswagen</option>
+                                <option value="fiat">Fiat</option>
+                                <option value="ford">Ford</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="honda">Honda</option>
+                                <option value="hyundai">Hyundai</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="car-model">Modelo do Veículo</label>
+                            <input type="text" id="car-model" required placeholder="Ex: Gol, Onix, Civic...">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="car-year">Ano</label>
+                                <select id="car-year" required>
+                                    <option value="">Selecione o ano</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="car-mileage">Quilometragem</label>
+                                <input type="number" id="car-mileage" required placeholder="Ex: 15000">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="car-fuel">Combustível</label>
+                                <select id="car-fuel" required>
+                                    <option value="">Selecione</option>
+                                    <option value="gasolina">Gasolina</option>
+                                    <option value="alcool">Álcool</option>
+                                    <option value="flex">Flex</option>
+                                    <option value="diesel">Diesel</option>
+                                    <option value="eletrico">Elétrico</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="car-color">Cor</label>
+                                <input type="text" id="car-color" required placeholder="Ex: Preto, Branco, Prata...">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="car-price">Preço</label>
+                            <input type="number" id="car-price" required placeholder="R$">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="car-description">Descrição do Veículo</label>
+                            <textarea id="car-description" required placeholder="Descreva as condições do veículo, itens de série, opcionais, histórico de manutenção..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="car-photos">Fotos do Veículo</label>
+                            <input type="file" id="car-photos" multiple accept="image/*">
+                            <small>Selecione até 10 fotos do veículo</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="seller-name">Seu Nome</label>
+                            <input type="text" id="seller-name" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="seller-phone">Telefone</label>
+                                <input type="tel" id="seller-phone" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="seller-email">E-mail</label>
+                                <input type="email" id="seller-email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="seller-location">Localização</label>
+                            <input type="text" id="seller-location" required placeholder="Cidade - Estado">
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">Publicar Anúncio</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página Financiamento -->
+        <section id="financing" class="page">
+            <div class="container">
+                <h2 class="section-title">Financiamento</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">Oferecemos as melhores condições de financiamento para você realizar o sonho do carro próprio. Parcelas que cabem no seu bolso.</p>
+                
+                <div class="finance-options">
+                    <div class="finance-card">
+                        <div class="finance-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Financiamento Bancário</h3>
+                        <p>Taxas competitivas com as melhores instituições financeiras do mercado.</p>
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>Até 60 meses para pagar</li>
+                            <li>Entrada a partir de 20%</li>
+                            <li>Taxas a partir de 0,99% ao mês</li>
+                        </ul>
+                        <a href="#" class="btn">Saiba Mais</a>
+                    </div>
+                    
+                    <div class="finance-card">
+                        <div class="finance-icon">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <h3>Consórcio</h3>
+                        <p>Adquira seu veículo novo ou seminovo através de consórcio.</p>
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>Planos de 24 a 80 meses</li>
+                            <li>Sem entrada</li>
+                            <li>Sem juros</li>
+                        </ul>
+                        <a href="#" class="btn">Saiba Mais</a>
+                    </div>
+                    
+                    <div class="finance-card">
+                        <div class="finance-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Financiamento Direto</h3>
+                        <p>Condições especiais diretamente com a Auto Motors.</p>
+                        <ul style="text-align: left; margin: 20px 0;">
+                            <li>Taxas reduzidas</li>
+                            <li>Análise rápida</li>
+                            <li>Documentação simplificada</li>
+                        </ul>
+                        <a href="#" class="btn">Saiba Mais</a>
+                    </div>
+                </div>
+                
+                <div class="calculator">
+                    <h3 style="text-align: center; margin-bottom: 30px;">Simule Seu Financiamento</h3>
+                    
+                    <div class="form-container">
+                        <form id="finance-calculator">
+                            <div class="form-group">
+                                <label for="vehicle-price">Valor do Veículo (R$)</label>
+                                <input type="number" id="vehicle-price" required value="80000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="down-payment">Entrada (R$)</label>
+                                <input type="number" id="down-payment" required value="16000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="installments">Parcelas</label>
+                                <select id="installments" required>
+                                    <option value="12">12x</option>
+                                    <option value="24">24x</option>
+                                    <option value="36" selected>36x</option>
+                                    <option value="48">48x</option>
+                                    <option value="60">60x</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="interest-rate">Taxa de Juros (% ao mês)</label>
+                                <input type="number" id="interest-rate" step="0.01" required value="1.2">
+                            </div>
+                            
+                            <button type="button" id="calculate-btn" class="btn" style="width: 100%;">Calcular</button>
+                            
+                            <div class="calculator-result">
+                                <h3>Valor da Parcela</h3>
+                                <div class="result-value" id="monthly-payment">R$ 2.134,56</div>
+                                <p id="total-amount">Total financiado: R$ 64.000,00</p>
+                                <p id="total-interest">Total de juros: R$ 12.844,16</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página Contato -->
+        <section id="contact" class="page">
+            <div class="container">
+                <h2 class="section-title">Entre em Contato</h2>
+                
+                <div class="form-container">
+                    <form id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Seu Nome</label>
+                                <input type="text" id="contact-name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-email">Seu E-mail</label>
+                                <input type="email" id="contact-email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-phone">Telefone</label>
+                            <input type="tel" id="contact-phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-subject">Assunto</label>
+                            <select id="contact-subject" required>
+                                <option value="">Selecione o assunto</option>
+                                <option value="duvida">Dúvida sobre veículo</option>
+                                <option value="venda">Quero vender meu carro</option>
+                                <option value="financiamento">Financiamento</option>
+                                <option value="reclamacao">Reclamação</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-message">Mensagem</label>
+                            <textarea id="contact-message" required placeholder="Descreva sua dúvida, solicitação ou comentário..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">Enviar Mensagem</button>
+                    </form>
+                </div>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 60px;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="margin-bottom: 20px;">Nossos Contatos</h3>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-map-marker-alt" style="color: var(--primary);"></i>
+                                <span>Av. Paulista, 1000 - São Paulo, SP</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-phone" style="color: var(--primary);"></i>
+                                <span>(11) 4002-8922</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-envelope" style="color: var(--primary);"></i>
+                                <span>contato@automotors.com.br</span>
+                            </li>
+                            <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-clock" style="color: var(--primary);"></i>
+                                <span>Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <h3 style="margin-bottom: 20px;">Onde Estamos</h3>
+                        <div style="background-color: #eee; height: 250px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <p>Mapa da localização</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página Login -->
+        <section id="login" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">Entrar na Auto Motors</h2>
+                    
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-email">E-mail</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="login-password">Senha</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div>
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me">Lembrar-me</label>
+                            </div>
+                            <a href="#" style="color: var(--primary); text-decoration: none;">Esqueci minha senha</a>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; margin-bottom: 20px;">Entrar</button>
+                        
+                        <div style="text-align: center;">
+                            <p>Não tem uma conta? <a href="#" data-page="register" style="color: var(--primary); text-decoration: none; font-weight: 500;">Cadastre-se</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Página Cadastro -->
+        <section id="register" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 30px;">Criar Conta na Auto Motors</h2>
+                    
+                    <form id="register-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="register-name">Nome</label>
+                                <input type="text" id="register-name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="register-lastname">Sobrenome</label>
+                                <input type="text" id="register-lastname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-email">E-mail</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="register-phone">Telefone</label>
+                            <input type="tel" id="register-phone" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="register-password">Senha</label>
+                                <input type="password" id="register-password" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="register-confirm-password">Confirmar Senha</label>
+                                <input type="password" id="register-confirm-password" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="checkbox" id="accept-terms" required>
+                            <label for="accept-terms">Aceito os <a href="#" style="color: var(--primary);">Termos de Uso</a> e <a href="#" style="color: var(--primary);">Política de Privacidade</a></label>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%; margin-bottom: 20px;">Criar Conta</button>
+                        
+                        <div style="text-align: center;">
+                            <p>Já tem uma conta? <a href="#" data-page="login" style="color: var(--primary); text-decoration: none; font-weight: 500;">Entrar</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Auto Motors</h3>
+                    <p>A melhor plataforma para compra e venda de veículos do Brasil. Conectamos compradores e vendedores de forma simples e segura.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#" data-page="home">Início</a></li>
+                        <li><a href="#" data-page="buy-car">Comprar Carro</a></li>
+                        <li><a href="#" data-page="sell-car">Vender Carro</a></li>
+                        <li><a href="#" data-page="financing">Financiamento</a></li>
+                        <li><a href="#" data-page="contact">Sobre Nós</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Marcas Populares</h3>
+                    <ul>
+                        <li><a href="#">Volkswagen</a></li>
+                        <li><a href="#">Fiat</a></li>
+                        <li><a href="#">Ford</a></li>
+                        <li><a href="#">Chevrolet</a></li>
+                        <li><a href="#">Toyota</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Visconde de Taunay 730, Joinville, SC</li>
+                        <li><i class="fas fa-phone"></i> +55 (47) 9652-6566</li>
+                        <li><i class="fas fa-envelope"></i> arthurwiggers2010@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Auto Motors. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navegação entre páginas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            document.querySelector('.mobile-menu').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+            });
+            
+            // Navegação entre páginas
+            const pageLinks = document.querySelectorAll('[data-page]');
+            const pages = document.querySelectorAll('.page');
+            
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Fechar menu mobile se estiver aberto
+                    document.querySelector('nav').classList.remove('active');
+                    
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Esconder todas as páginas
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    // Mostrar a página alvo
+                    document.getElementById(targetPage).classList.add('active');
+                    
+                    // Atualizar a URL (sem recarregar a página)
+                    window.history.pushState({}, '', `#${targetPage}`);
+                });
+            });
+            
+            // Simulação de cálculo de financiamento
+            document.getElementById('calculate-btn').addEventListener('click', function() {
+                const vehiclePrice = parseFloat(document.getElementById('vehicle-price').value);
+                const downPayment = parseFloat(document.getElementById('down-payment').value);
+                const installments = parseInt(document.getElementById('installments').value);
+                const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+                
+                const financedAmount = vehiclePrice - downPayment;
+                const monthlyRate = interestRate;
+                
+                // Cálculo da parcela (sistema price)
+                const monthlyPayment = financedAmount * (monthlyRate * Math.pow(1 + monthlyRate, installments)) / (Math.pow(1 + monthlyRate, installments) - 1);
+                const totalAmount = monthlyPayment * installments;
+                const totalInterest = totalAmount - financedAmount;
+                
+                // Atualizar os resultados
+                document.getElementById('monthly-payment').textContent = 'R$ ' + monthlyPayment.toFixed(2).replace('.', ',');
+                document.getElementById('total-amount').textContent = 'Total financiado: R$ ' + financedAmount.toFixed(2).replace('.', ',');
+                document.getElementById('total-interest').textContent = 'Total de juros: R$ ' + totalInterest.toFixed(2).replace('.', ',');
+            });
+            
+            // Verificar hash na URL para carregar a página correta
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                // Esconder todas as páginas
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Mostrar a página do hash
+                document.getElementById(hash).classList.add('active');
+            }
+            
+            // Prevenir envio de formulários (apenas para demonstração)
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Formulário enviado com sucesso! (Esta é uma demonstração)');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

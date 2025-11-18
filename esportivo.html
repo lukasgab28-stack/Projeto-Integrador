@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarRent - Esportivos</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #111111;
+  --card: #f1f1f1;
+  --accent: #ffcc00;
+  --filter-bg: #e6e6e6;
+  --filter-active: #ffcc00;
+}
+
+[data-theme="dark"] {
+  --bg: #0d0d0d;
+  --text: #ffffff;
+  --card: #1a1a1a;
+  --accent: #ffcc00;
+  --filter-bg: #333;
+  --filter-active: #ffcc00;
+}
+
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .4s, color .4s;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  position:fixed;
+  width:100%;
+  top:0;
+  background: var(--bg);
+  border-bottom:1px solid #3332;
+  z-index:10;
+}
+
+header h1 { color: var(--accent); }
+nav a { color: var(--text); text-decoration:none; margin-left:20px; }
+nav a:hover{ color: var(--accent); }
+
+#themeToggle { background: var(--accent); border:none; padding:10px; border-radius:8px; cursor:pointer; }
+#themeToggle:focus { outline:3px solid #0044ff; }
+
+.main-container { padding:120px 40px 40px 40px; max-width:1400px; margin:auto; }
+
+h2 { text-align:center; margin-bottom:30px; font-size:2.5rem; }
+
+.filtros {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap:15px;
+  margin-bottom:40px;
+  justify-items:center;
+}
+
+.filtro {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:pointer;
+  padding:15px;
+  border-radius:10px;
+  background: var(--filter-bg);
+  transition: transform .3s, background .3s;
+  text-align:center;
+  width:100%;
+}
+
+.filtro img { width:50px; height:50px; object-fit:contain; margin-bottom:8px; }
+.filtro span { font-weight:bold; }
+
+.filtro:hover, .filtro.ativo {
+  background: var(--filter-active);
+  transform: scale(1.05);
+}
+
+.cars {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap:25px;
+  justify-items:center;
+}
+
+.car-card {
+  width:100%;
+  max-width:300px;
+  background: var(--card);
+  border-radius:10px;
+  padding:15px;
+  text-align:center;
+  transition: transform .3s, box-shadow .3s, background .3s;
+}
+
+.car-card img { width:100%; border-radius:10px; }
+
+.car-card:hover { transform: scale(1.05); box-shadow:0 0 20px var(--accent); }
+
+a.btn-alugar {
+  display:inline-block;
+  background: var(--accent);
+  color:#000;
+  text-decoration:none;
+  padding:10px 20px;
+  margin-top:10px;
+  border-radius:5px;
+  transition:.3s;
+}
+
+a.btn-alugar:hover { background:#e6b800; }
+
+footer {
+  display:flex;
+  justify-content:space-around;
+  padding:40px 20px;
+  background: var(--card);
+  flex-wrap:wrap;
+  gap:20px;
+}
+
+footer h3 { margin-bottom:10px; }
+footer ul { list-style:none;padding:0; }
+footer ul li { margin-bottom:5px; }
+footer a { text-decoration:none; color:var(--text); }
+footer a:hover { color:var(--accent); }
+</style>
+</head>
+<body data-theme="light">
+
+<header>
+  <h1>CarRent</h1>
+  <nav aria-label="Menu principal">
+    <a href="index.html">Home</a>
+    <a href="esportivo.html">Esportivos</a>
+    <a href="#">Contato</a>
+  </nav>
+  <button id="themeToggle" aria-label="Alternar tema">🌞</button>
+</header>
+
+<div class="main-container">
+  <h2>Carros Esportivos</h2>
+
+  <section class="filtros" aria-label="Filtros de marcas">
+    <div class="filtro ativo" data-brand="Todos" tabindex="0">
+      <img src="logos/todos.png" alt="Todos carros">
+      <span>Todos</span>
+    </div>
+    <div class="filtro" data-brand="Ferrari" tabindex="0">
+      <img src="logos/ferrari.png" alt="Ferrari">
+      <span>Ferrari</span>
+    </div>
+    <div class="filtro" data-brand="Lamborghini" tabindex="0">
+      <img src="logos/lamborghini.png" alt="Lamborghini">
+      <span>Lamborghini</span>
+    </div>
+    <div class="filtro" data-brand="Porsche" tabindex="0">
+      <img src="logos/por.gif" alt="Porsche">
+      <span>Porsche</span>
+    </div>
+    <div class="filtro" data-brand="McLaren" tabindex="0">
+      <img src="logos/mclaren.png" alt="McLaren">
+      <span>McLaren</span>
+    </div>
+    <div class="filtro" data-brand="Audi" tabindex="0">
+      <img src="logos/audi.png" alt="Audi">
+      <span>Audi</span>
+    </div>
+    <div class="filtro" data-brand="Mercedes" tabindex="0">
+      <img src="logos/mer.gif" alt="Mercedes AMG">
+      <span>Mercedes AMG</span>
+    </div>
+  </section>
+
+  <section class="cars" aria-label="Carros esportivos disponíveis">
+    <article class="car-card" data-brand="Ferrari">
+      <img src="images/ferrari-488.jpg" alt="Ferrari 488">
+      <h3>Ferrari 488</h3>
+      <p>A partir de R$ 1500/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+
+    <article class="car-card" data-brand="Lamborghini">
+      <img src="images/lamborghini-huracan.jpg" alt="Lamborghini Huracán">
+      <h3>Lamborghini Huracán</h3>
+      <p>A partir de R$ 1600/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+
+    <article class="car-card" data-brand="Porsche">
+      <img src="images/porsche-911.jpg" alt="Porsche 911">
+      <h3>Porsche 911</h3>
+      <p>A partir de R$ 1400/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+
+    <article class="car-card" data-brand="McLaren">
+      <img src="images/mclaren-720s.jpg" alt="McLaren 720S">
+      <h3>McLaren 720S</h3>
+      <p>A partir de R$ 1700/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+
+    <article class="car-card" data-brand="Audi">
+      <img src="images/audi-r8.jpg" alt="Audi R8">
+      <h3>Audi R8</h3>
+      <p>A partir de R$ 1200/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+
+    <article class="car-card" data-brand="Mercedes">
+      <img src="img/m.webp" alt="Mercedes AMG GT">
+      <h3>Mercedes AMG GT</h3>
+      <p>A partir de R$ 1350/dia</p>
+      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    </article>
+  </section>
+</div>
+
+<footer>
+  <div>
+    <h3>CarRent</h3>
+    <p>Alugue seu carro com rapidez e segurança.</p>
+  </div>
+  <div>
+    <h3>Guia Rápido</h3>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="esportivo.html">Carros Esportivos</a></li>
+    </ul>
+  </div>
+  <div>
+    <h3>Contato</h3>
+    <p>Email: contato@carrent.com</p>
+    <p>Telefone: (11) 90000-0000</p>
+  </div>
+</footer>
+
+<script>
+// Tema claro/escuro
+const body=document.body;
+const toggle=document.getElementById("themeToggle");
+const sun="🌞", moon="🌜";
+const savedTheme=localStorage.getItem("theme");
+if(savedTheme){body.setAttribute("data-theme",savedTheme); toggle.textContent=savedTheme==="dark"?moon:sun;}
+else if(window.matchMedia("(prefers-color-scheme: dark)").matches){body.setAttribute("data-theme","dark"); toggle.textContent=moon;}
+toggle.addEventListener("click", ()=>{
+  const current=body.getAttribute("data-theme");
+  const next=current==="light"?"dark":"light";
+  body.setAttribute("data-theme", next);
+  toggle.textContent=next==="dark"?moon:sun;
+  localStorage.setItem("theme", next);
+});
+
+// Filtros
+const filtros=document.querySelectorAll('.filtro');
+const cars=document.querySelectorAll('.car-card');
+
+function filtrar(){
+  const ativo=[...filtros].find(f=>f.classList.contains('ativo'));
+  const marca=ativo?ativo.getAttribute('data-brand'):'Todos';
+  cars.forEach(car=>{ car.style.display=(marca==='Todos'||car.getAttribute('data-brand')===marca)?'grid':'none'; });
+}
+
+filtros.forEach(f=>{
+  f.addEventListener('click', ()=>{
+    filtros.forEach(f2=>f2.classList.remove('ativo'));
+    f.classList.add('ativo');
+    filtrar();
+  });
+  f.addEventListener('keydown', e=>{
+    if(e.key==="Enter" || e.key===" "){ e.preventDefault(); f.click(); }
+  });
+});
+
+filtrar();
+</script>
+
+</body>
+</html>

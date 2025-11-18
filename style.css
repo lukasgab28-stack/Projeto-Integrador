@@ -1,0 +1,66 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 40px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    background: var(--bg);
+    border-bottom: 1px solid #3332;
+    z-index: 1000;
+}
+
+/* Agrupa menu + botão */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;  /* espaçamento entre os itens */
+}
+
+/* botão */
+#themeToggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    background: var(--accent);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+#themeToggle:hover {
+    transform: scale(1.1);
+}
+
+#themeToggle:focus {
+    outline: 3px solid #0044ff;
+}
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 80px;
+
+    padding: 0 30px;
+    box-sizing: border-box;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: var(--bg);
+    border-bottom: 1px solid #3332;
+    z-index: 1000;
+}

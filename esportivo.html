@@ -1,288 +1,469 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CarRent - Esportivos</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CarRent — Esportivos</title>
 <style>
-:root {
-  --bg: #ffffff;
-  --text: #111111;
-  --card: #f1f1f1;
-  --accent: #ffcc00;
-  --filter-bg: #e6e6e6;
-  --filter-active: #ffcc00;
-}
+  /* ---------- THEME / PALETA NEON AGRESSIVA ---------- */
+  :root{
+    --bg: #020205;
+    --card: linear-gradient(180deg,#05050a, #0b0b12);
+    --text: #e6f9ff;
+    --accent: #00e5ff;      /* azul elétrico (neon) */
+    --accent-weak: rgba(0,229,255,.14);
+    --muted: rgba(230,249,255,.45);
+    --danger: #ff1744;      /* faixa vermelha opcional */
+    --glass: rgba(255,255,255,.03);
+  }
+  [data-theme="light"]{
+    --bg:#f6fbff;
+    --card: linear-gradient(180deg,#ffffff,#f3f7fb);
+    --text:#0b1220;
+    --accent:#006b8f;
+    --accent-weak: rgba(0,107,143,.08);
+    --muted: rgba(11,18,32,.45);
+    --danger: #cc1a2b;
+    --glass: rgba(0,0,0,.02);
+  }
 
-[data-theme="dark"] {
-  --bg: #0d0d0d;
-  --text: #ffffff;
-  --card: #1a1a1a;
-  --accent: #ffcc00;
-  --filter-bg: #333;
-  --filter-active: #ffcc00;
-}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition:background .25s, color .25s;
+  }
 
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  transition: background .4s, color .4s;
-}
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed; left:0; right:0; top:0; height:72px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 28px; z-index:80; backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(0,0,0,.12), transparent);
+    border-bottom: 1px solid rgba(255,255,255,.02);
+  }
+  header h1{
+    margin:0; font-size:1.1rem; letter-spacing:.6px;
+    color:var(--accent); cursor:pointer; user-select:none;
+    display:flex; align-items:center; gap:10px;
+  }
+  header nav{ display:flex; align-items:center; gap:18px }
+  header nav a{
+    color:var(--muted); text-decoration:none; font-weight:600;
+  }
+  header nav a:hover{ color:var(--accent) }
 
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  position:fixed;
-  width:100%;
-  top:0;
-  background: var(--bg);
-  border-bottom:1px solid #3332;
-  z-index:10;
-}
+  /* ---------- CONTAINER ---------- */
+  .wrap{ max-width:1200px; margin:98px auto 60px; padding:0 20px; }
 
-header h1 { color: var(--accent); }
-nav a { color: var(--text); text-decoration:none; margin-left:20px; }
-nav a:hover{ color: var(--accent); }
+  /* ---------- HERO / CONTROLS ---------- */
+  .hero{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:24px; padding:18px; border-radius:12px;
+    background: linear-gradient(90deg, rgba(0,0,0,.28), rgba(0,0,0,.06));
+    box-shadow: 0 10px 40px rgba(0,0,0,.55);
+  }
+  .hero .title{ font-size:1.8rem; font-weight:800; color:var(--accent); }
+  .controls{ display:flex; gap:12px; align-items:center; }
+  .controls input{
+    width:320px; padding:12px 14px; border-radius:10px;
+    border:1px solid var(--glass); background:transparent; color:var(--text);
+    outline:none; caret-color:var(--accent);
+  }
+  .controls .btn{
+    padding:11px 14px; border-radius:10px; border:none; cursor:pointer;
+    font-weight:700; background:linear-gradient(90deg,var(--accent), #6ff7ff);
+    box-shadow: 0 8px 30px rgba(0,229,255,.08), 0 0 18px rgba(0,229,255,.06);
+    color:#001; transition:transform .12s ease, box-shadow .12s;
+  }
+  .controls .btn:active{ transform:translateY(2px); }
 
-#themeToggle { background: var(--accent); border:none; padding:10px; border-radius:8px; cursor:pointer; }
-#themeToggle:focus { outline:3px solid #0044ff; }
+  /* ---------- FILTROS (marcas) ---------- */
+  .filters{ display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+  .chip{
+    padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:700;
+    background:var(--glass); color:var(--muted); border:1px solid transparent;
+    transition: transform .12s, background .12s, color .12s, box-shadow .12s;
+  }
+  .chip.active{
+    background: linear-gradient(90deg,var(--accent), #6ff7ff);
+    color:#001; box-shadow: 0 8px 30px rgba(0,229,255,.08);
+    transform:translateY(-4px) scale(1.02);
+  }
 
-.main-container { padding:120px 40px 40px 40px; max-width:1400px; margin:auto; }
+  /* optional red ribbon */
+  .ribbon{
+    height:6px; width:100%; margin-top:12px; border-radius:4px;
+    background: linear-gradient(90deg, rgba(0,0,0,0), var(--danger), rgba(0,0,0,0));
+    opacity:.95;
+  }
 
-h2 { text-align:center; margin-bottom:30px; font-size:2.5rem; }
+  /* ---------- GRID / CARDS (aggressive) ---------- */
+  .grid{
+    display:grid; gap:18px; margin-top:20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
 
-.filtros {
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap:15px;
-  margin-bottom:40px;
-  justify-items:center;
-}
+  .card{
+    position:relative; overflow:hidden; border-radius:12px;
+    background: var(--card); padding:12px; cursor:pointer;
+    transform-origin:center center;
+    transition: transform .12s ease, box-shadow .12s ease;
+    box-shadow: 0 6px 22px rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.22);
+  }
+  /* ACCELERATION / "peso" effect */
+  .card.accelerate{ transition: transform .08s cubic-bezier(.2,.9,.2,1), box-shadow .08s; transform: scale(1.03) translateY(-6px); box-shadow: 0 18px 60px rgba(0,0,0,.7); }
 
-.filtro {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  cursor:pointer;
-  padding:15px;
-  border-radius:10px;
-  background: var(--filter-bg);
-  transition: transform .3s, background .3s;
-  text-align:center;
-  width:100%;
-}
+  /* tilt */
+  .card .inner{
+    will-change: transform;
+    transition: transform .08s linear;
+    border-radius:10px;
+  }
 
-.filtro img { width:50px; height:50px; object-fit:contain; margin-bottom:8px; }
-.filtro span { font-weight:bold; }
+  .card img{
+    width:100%; height:160px; object-fit:cover; border-radius:8px;
+    display:block; transition: transform .18s ease, filter .18s ease;
+  }
 
-.filtro:hover, .filtro.ativo {
-  background: var(--filter-active);
-  transform: scale(1.05);
-}
+  .meta{ display:flex; align-items:center; justify-content:space-between; padding-top:10px; gap:10px; }
+  .meta h3{ margin:0; font-size:1.05rem; letter-spacing:.2px; }
+  .price{ color:var(--accent); font-weight:900; }
 
-.cars {
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap:25px;
-  justify-items:center;
-}
+  .cta{ margin-top:10px; display:flex; gap:8px; align-items:center; }
+  .cta .btn-small{
+    padding:9px 12px; border-radius:8px; border:none; font-weight:800; cursor:pointer;
+    background: transparent; color:var(--accent); box-shadow: inset 0 0 0 1px rgba(0,229,255,.12);
+  }
+  .cta .btn-small.fill{
+    background:linear-gradient(90deg,var(--accent), #6ff7ff); color:#001;
+    box-shadow: 0 8px 30px rgba(0,229,255,.08);
+  }
 
-.car-card {
-  width:100%;
-  max-width:300px;
-  background: var(--card);
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-  transition: transform .3s, box-shadow .3s, background .3s;
-}
+  /* sparks container */
+  .sparks{ position:absolute; left:0; top:0; right:0; bottom:0; pointer-events:none; overflow:hidden; }
 
-.car-card img { width:100%; border-radius:10px; }
+  .spark{
+    position:absolute; width:6px; height:6px; border-radius:50%;
+    background:var(--accent); opacity:0.95; transform:translate3d(0,0,0);
+    box-shadow:0 0 8px var(--accent), 0 0 18px rgba(0,229,255,.35);
+    will-change: transform, opacity;
+  }
 
-.car-card:hover { transform: scale(1.05); box-shadow:0 0 20px var(--accent); }
+  /* tilt shadow / neon stroke on hover */
+  .card:hover{ box-shadow: 0 20px 70px rgba(0,229,255,.06), 0 0 28px rgba(0,229,255,.03); border-color: rgba(0,229,255,.12); }
+  .card:hover .inner{ outline: 1px solid rgba(0,229,255,.06); }
 
-a.btn-alugar {
-  display:inline-block;
-  background: var(--accent);
-  color:#000;
-  text-decoration:none;
-  padding:10px 20px;
-  margin-top:10px;
-  border-radius:5px;
-  transition:.3s;
-}
-
-a.btn-alugar:hover { background:#e6b800; }
-
-footer {
-  display:flex;
-  justify-content:space-around;
-  padding:40px 20px;
-  background: var(--card);
-  flex-wrap:wrap;
-  gap:20px;
-}
-
-footer h3 { margin-bottom:10px; }
-footer ul { list-style:none;padding:0; }
-footer ul li { margin-bottom:5px; }
-footer a { text-decoration:none; color:var(--text); }
-footer a:hover { color:var(--accent); }
+  /* small responsive tweaks */
+  @media (max-width:640px){
+    .controls input{ width:160px; }
+    header{ padding:0 14px }
+  }
 </style>
 </head>
-<body data-theme="light">
-
+<body data-theme="dark">
 <header>
-  <h1>CarRent</h1>
-  <nav aria-label="Menu principal">
+  <h1 id="titleToggle">CarRent</h1>
+  <nav>
     <a href="index.html">Home</a>
-    <a href="esportivo.html">Esportivos</a>
-    <a href="#">Contato</a>
+    <a href="suv.html">SUVs</a>
+    <a href="luxo.html">Luxo</a>
   </nav>
-  <button id="themeToggle" aria-label="Alternar tema">🌞</button>
 </header>
 
-<div class="main-container">
-  <h2>Carros Esportivos</h2>
+<div class="wrap">
+  <div class="hero" role="banner" aria-label="Busque esportivos">
+    <div>
+      <div class="title">Esportivos — Pura Agressividade 🏁</div>
+      <div class="filters" role="list" aria-label="Filtros por marca" id="brandChips">
+        <!-- chips populated by HTML below -->
+      </div>
+    </div>
 
-  <section class="filtros" aria-label="Filtros de marcas">
-    <div class="filtro ativo" data-brand="Todos" tabindex="0">
-      <img src="logos/todos.png" alt="Todos carros">
-      <span>Todos</span>
+    <div class="controls" role="search" aria-label="Pesquisar carros">
+      <input id="search" placeholder="Pesquisar (ex: Ferrari, Porsche, Audi)"/>
+      <button class="btn" id="searchBtn">BUSCAR</button>
     </div>
-    <div class="filtro" data-brand="Ferrari" tabindex="0">
-      <img src="logos/ferrari.png" alt="Ferrari">
-      <span>Ferrari</span>
-    </div>
-    <div class="filtro" data-brand="Lamborghini" tabindex="0">
-      <img src="logos/lamborghini.png" alt="Lamborghini">
-      <span>Lamborghini</span>
-    </div>
-    <div class="filtro" data-brand="Porsche" tabindex="0">
-      <img src="logos/por.gif" alt="Porsche">
-      <span>Porsche</span>
-    </div>
-    <div class="filtro" data-brand="McLaren" tabindex="0">
-      <img src="logos/mclaren.png" alt="McLaren">
-      <span>McLaren</span>
-    </div>
-    <div class="filtro" data-brand="Audi" tabindex="0">
-      <img src="logos/audi.png" alt="Audi">
-      <span>Audi</span>
-    </div>
-    <div class="filtro" data-brand="Mercedes" tabindex="0">
-      <img src="logos/mer.gif" alt="Mercedes AMG">
-      <span>Mercedes AMG</span>
-    </div>
-  </section>
+  </div>
 
-  <section class="cars" aria-label="Carros esportivos disponíveis">
-    <article class="car-card" data-brand="Ferrari">
-      <img src="images/ferrari-488.jpg" alt="Ferrari 488">
-      <h3>Ferrari 488</h3>
-      <p>A partir de R$ 1500/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+  <!-- optional red ribbon -->
+  <div class="ribbon" aria-hidden="true" style="margin-top:14px"></div>
+
+  <section class="grid" id="grid">
+    <!-- Cards: mantive as referência as imagens/carros que você tinha no código inicial +
+         alguns modelos esportivos clássicos; substitua caminhos img/* por seus assets locais -->
+    <article class="card" data-brand="Ferrari" data-tags="esportivo,racing">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1400&auto=format&fit=crop" alt="Ferrari esportivo vermelho">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>Ferrari F8</h3>
+          <div class="price">R$ 1.500/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
 
-    <article class="car-card" data-brand="Lamborghini">
-      <img src="images/lamborghini-huracan.jpg" alt="Lamborghini Huracán">
-      <h3>Lamborghini Huracán</h3>
-      <p>A partir de R$ 1600/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    <article class="card" data-brand="Lamborghini" data-tags="esportivo,supercar">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=1400&auto=format&fit=crop" alt="Lamborghini Huracán">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>Lamborghini Huracán</h3>
+          <div class="price">R$ 1.600/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
 
-    <article class="car-card" data-brand="Porsche">
-      <img src="images/porsche-911.jpg" alt="Porsche 911">
-      <h3>Porsche 911</h3>
-      <p>A partir de R$ 1400/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    <article class="card" data-brand="Porsche" data-tags="esportivo,track">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1400&auto=format&fit=crop" alt="Porsche 911">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>Porsche 911</h3>
+          <div class="price">R$ 1.400/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
 
-    <article class="car-card" data-brand="McLaren">
-      <img src="images/mclaren-720s.jpg" alt="McLaren 720S">
-      <h3>McLaren 720S</h3>
-      <p>A partir de R$ 1700/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    <!-- extras keeping original sporty list from earlier request -->
+    <article class="card" data-brand="McLaren" data-tags="esportivo,supercar">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1400&auto=format&fit=crop" alt="McLaren 720S">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>McLaren 720S</h3>
+          <div class="price">R$ 1.700/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
 
-    <article class="car-card" data-brand="Audi">
-      <img src="images/audi-r8.jpg" alt="Audi R8">
-      <h3>Audi R8</h3>
-      <p>A partir de R$ 1200/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    <article class="card" data-brand="Audi" data-tags="esportivo,gt">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1400&auto=format&fit=crop" alt="Audi R8">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>Audi R8</h3>
+          <div class="price">R$ 1.200/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
 
-    <article class="car-card" data-brand="Mercedes">
-      <img src="img/m.webp" alt="Mercedes AMG GT">
-      <h3>Mercedes AMG GT</h3>
-      <p>A partir de R$ 1350/dia</p>
-      <a href="esportivo.html" class="btn-alugar">Alugar</a>
+    <article class="card" data-brand="Mercedes" data-tags="esportivo,amg">
+      <div class="inner">
+        <div style="position:relative">
+          <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1400&auto=format&fit=crop" alt="Mercedes AMG GT">
+          <div class="sparks" aria-hidden="true"></div>
+        </div>
+        <div class="meta">
+          <h3>Mercedes AMG GT</h3>
+          <div class="price">R$ 1.350/dia</div>
+        </div>
+        <div class="cta">
+          <button class="btn-small" data-action="details">DETALHES</button>
+          <a class="btn-small fill" href="esportivo.html">ALUGAR</a>
+        </div>
+      </div>
     </article>
   </section>
 </div>
 
-<footer>
-  <div>
-    <h3>CarRent</h3>
-    <p>Alugue seu carro com rapidez e segurança.</p>
-  </div>
-  <div>
-    <h3>Guia Rápido</h3>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="esportivo.html">Carros Esportivos</a></li>
-    </ul>
-  </div>
-  <div>
-    <h3>Contato</h3>
-    <p>Email: contato@carrent.com</p>
-    <p>Telefone: (11) 90000-0000</p>
-  </div>
-</footer>
-
 <script>
-// Tema claro/escuro
-const body=document.body;
-const toggle=document.getElementById("themeToggle");
-const sun="🌞", moon="🌜";
-const savedTheme=localStorage.getItem("theme");
-if(savedTheme){body.setAttribute("data-theme",savedTheme); toggle.textContent=savedTheme==="dark"?moon:sun;}
-else if(window.matchMedia("(prefers-color-scheme: dark)").matches){body.setAttribute("data-theme","dark"); toggle.textContent=moon;}
-toggle.addEventListener("click", ()=>{
-  const current=body.getAttribute("data-theme");
-  const next=current==="light"?"dark":"light";
-  body.setAttribute("data-theme", next);
-  toggle.textContent=next==="dark"?moon:sun;
-  localStorage.setItem("theme", next);
+/* ===================== THEME (title click) ===================== */
+const body = document.body;
+const title = document.getElementById('titleToggle');
+const savedTheme = localStorage.getItem('theme');
+if(savedTheme) body.setAttribute('data-theme', savedTheme);
+title && title.addEventListener('click', ()=>{
+  const current = body.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  body.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
 });
 
-// Filtros
-const filtros=document.querySelectorAll('.filtro');
-const cars=document.querySelectorAll('.car-card');
+/* ===================== FILTERS & SEARCH ===================== */
+const grid = document.getElementById('grid');
+const cards = Array.from(grid.querySelectorAll('.card'));
+const search = document.getElementById('search');
+const searchBtn = document.getElementById('searchBtn');
 
-function filtrar(){
-  const ativo=[...filtros].find(f=>f.classList.contains('ativo'));
-  const marca=ativo?ativo.getAttribute('data-brand'):'Todos';
-  cars.forEach(car=>{ car.style.display=(marca==='Todos'||car.getAttribute('data-brand')===marca)?'grid':'none'; });
+function collectBrands(){
+  const brands = new Set();
+  cards.forEach(c => brands.add(c.dataset.brand || 'Outros'));
+  return Array.from(brands).sort();
+}
+function renderChips(){
+  const container = document.getElementById('brandChips');
+  container.innerHTML = '';
+  const all = document.createElement('button');
+  all.className = 'chip active'; all.textContent = 'Todos'; all.dataset.brand = 'Todos';
+  container.appendChild(all);
+  collectBrands().forEach(b=>{
+    const btn = document.createElement('button');
+    btn.className = 'chip'; btn.textContent = b; btn.dataset.brand = b;
+    container.appendChild(btn);
+  });
+  container.addEventListener('click', (e)=>{
+    const t = e.target.closest('.chip'); if(!t) return;
+    container.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    applyFilter();
+  });
+}
+function applyFilter(){
+  const active = document.querySelector('.chip.active');
+  const brand = active ? active.dataset.brand.toLowerCase() : 'todos';
+  const q = search.value.trim().toLowerCase();
+  cards.forEach(c=>{
+    const matchesBrand = (brand === 'todos') || (c.dataset.brand && c.dataset.brand.toLowerCase() === brand);
+    const text = (c.querySelector('h3').textContent + ' ' + (c.dataset.brand||'') + ' ' + (c.dataset.tags||'')).toLowerCase();
+    const matchesQuery = q === '' || text.includes(q);
+    c.style.display = (matchesBrand && matchesQuery) ? '' : 'none';
+  });
 }
 
-filtros.forEach(f=>{
-  f.addEventListener('click', ()=>{
-    filtros.forEach(f2=>f2.classList.remove('ativo'));
-    f.classList.add('ativo');
-    filtrar();
-  });
-  f.addEventListener('keydown', e=>{
-    if(e.key==="Enter" || e.key===" "){ e.preventDefault(); f.click(); }
-  });
+/* search events */
+searchBtn.addEventListener('click', applyFilter);
+search.addEventListener('keydown', e=>{ if(e.key === 'Enter') applyFilter(); });
+
+renderChips();
+applyFilter();
+
+/* ================ CARD INTERACTIONS: tilt, accelerate, sparks ================ */
+function onCardEnter(card){
+  card.classList.add('accelerate');
+  startSparks(card);
+}
+function onCardLeave(card){
+  card.classList.remove('accelerate');
+  stopSparks(card);
+  // reset inner transform
+  const inner = card.querySelector('.inner');
+  if(inner) inner.style.transform = '';
+}
+function onCardMove(card, e){
+  const rect = card.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  const dx = (e.clientX - cx);
+  const dy = (e.clientY - cy);
+  const rx = (dy / rect.height) * -10;   // rotateX
+  const ry = (dx / rect.width) * 14;     // rotateY
+  const inner = card.querySelector('.inner');
+  if(inner) inner.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+}
+
+/* SPARKS: lightweight particle generator inside card.sparks */
+const sparkPool = new WeakMap(); // card -> array of timeouts/els
+
+function startSparks(card){
+  const sparksContainer = card.querySelector('.sparks');
+  if(!sparksContainer) return;
+  // create a burst every 80ms while hovered, stop after 600ms of no activity
+  if(sparkPool.has(card)) return; // already running
+  let running = true;
+  const handles = [];
+  sparkPool.set(card, handles);
+
+  function burst(){
+    if(!running) return;
+    // create 6 sparks
+    for(let i=0;i<6;i++){
+      const s = document.createElement('div');
+      s.className = 'spark';
+      const x = Math.random() * (card.clientWidth - 20) + 10;
+      const y = Math.random() * (card.clientHeight/1.6);
+      s.style.left = x + 'px'; s.style.top = y + 'px';
+      sparksContainer.appendChild(s);
+      // animate via JS: random velocity
+      const angle = (Math.random()*Math.PI*2);
+      const speed = 40 + Math.random()*160; // pixels
+      const vx = Math.cos(angle) * speed;
+      const vy = Math.sin(angle) * speed - 30; // bias upwards
+      const rot = (Math.random()*360);
+      s.style.transform = `translate3d(0,0,0) rotate(${rot}deg)`;
+      // fade + move
+      requestAnimationFrame(()=>{
+        s.style.transition = 'transform 520ms cubic-bezier(.2,.9,.2,1), opacity 520ms linear';
+        s.style.opacity = 0;
+        s.style.transform = `translate3d(${vx}px, ${vy}px, 0) rotate(${rot+90}deg) scale(${0.6 + Math.random()*0.8})`;
+      });
+      // remove after animation
+      const tid = setTimeout(()=>{ s.remove(); }, 560);
+      handles.push(tid);
+    }
+    // schedule next burst
+    const next = setTimeout(burst, 80 + Math.random()*80);
+    handles.push(next);
+  }
+  burst();
+
+  // attach a small inactivity stopper (if mouse leaves we call stopSparks)
+  card._stopSparks = ()=>{ running = false; handles.forEach(h=>clearTimeout(h)); sparkPool.delete(card); };
+}
+
+function stopSparks(card){
+  if(card._stopSparks) { card._stopSparks(); delete card._stopSparks; }
+  const sparksContainer = card.querySelector('.sparks');
+  if(!sparksContainer) return;
+  // clear existing small nodes
+  Array.from(sparksContainer.children).forEach(n=>n.remove());
+}
+
+/* attach events */
+cards.forEach(card=>{
+  card.addEventListener('mouseenter', ()=>onCardEnter(card));
+  card.addEventListener('mouseleave', ()=>onCardLeave(card));
+  card.addEventListener('mousemove', e=>onCardMove(card, e));
+  // small fallback touch support: on touchstart, add accelerate briefly & sparks
+  card.addEventListener('touchstart', ()=>{ onCardEnter(card); setTimeout(()=>onCardLeave(card), 700); }, {passive:true});
 });
 
-filtrar();
+/* small UX: clicking DETALHES shows a quick modal (simple) */
+document.addEventListener('click', (e)=>{
+  const det = e.target.closest('[data-action="details"]');
+  if(!det) return;
+  const card = det.closest('.card');
+  if(!card) return;
+  const title = card.querySelector('h3').textContent;
+  const price = card.querySelector('.price').textContent;
+  alert(`${title}\n\nPreço: ${price}\n\nEntre em contato para mais informações ou clique em ALUGAR.`);
+});
 </script>
-
 </body>
 </html>

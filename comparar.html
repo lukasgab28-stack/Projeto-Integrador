@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparar Carros</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Inter,Arial;
+    background:#0c0c0e;
+    color:#fff;
+}
+
+header{
+    padding:20px;
+    background:#111216;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+header nav a{
+    margin-left:18px;
+    color:#fff;
+    text-decoration:none;
+}
+
+.container{
+    max-width:1100px;
+    margin:40px auto;
+    padding:20px;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    background:#1b1c20;
+    border:1px solid #333;
+    border-radius:8px;
+    color:#fff;
+    margin-top:5px;
+}
+
+.compare-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    margin-top:40px;
+}
+
+.card{
+    background:#15161a;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 12px rgba(0,0,0,.4);
+}
+
+.card h3{
+    margin-top:0;
+    margin-bottom:14px;
+    font-size:1.4rem;
+    color:#ffd600;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+table tr td{
+    padding:10px 6px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Comparar Carros</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="esportivo.html">Esportivos</a>
+        <a href="suv.html">SUVs</a>
+        <a href="luxo.html">Luxo</a>
+        <a href="financiamento.html">Financiamento</a>
+        <a href="comparar.html">Comparar</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <h2>Selecione dois carros para comparar</h2>
+
+    <!-- SELECTS -->
+    <div class="compare-box">
+        <div>
+            <label>Carro 1</label>
+            <select id="car1">
+                <option value="">Selecione...</option>
+                <option value="supra">Toyota Supra</option>
+                <option value="911">Porsche 911</option>
+                <option value="urus">Lamborghini Urus</option>
+                <option value="bmwX5">BMW X5</option>
+                <option value="audiRS7">Audi RS7</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Carro 2</label>
+            <select id="car2">
+                <option value="">Selecione...</option>
+                <option value="supra">Toyota Supra</option>
+                <option value="911">Porsche 911</option>
+                <option value="urus">Lamborghini Urus</option>
+                <option value="bmwX5">BMW X5</option>
+                <option value="audiRS7">Audi RS7</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div class="compare-box" style="margin-top:60px;">
+        <div class="card">
+            <h3 id="car1Name">Carro 1</h3>
+            <table id="car1Table"></table>
+        </div>
+
+        <div class="card">
+            <h3 id="car2Name">Carro 2</h3>
+            <table id="car2Table"></table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Banco de dados dos carros
+const cars = {
+    supra:{
+        name:"Toyota Supra",
+        power:"382 cv",
+        consumo:"9,5 km/l",
+        price:"R$ 450 / dia",
+        categoria:"Esportivo"
+    },
+    "911":{
+        name:"Porsche 911",
+        power:"443 cv",
+        consumo:"8,1 km/l",
+        price:"R$ 850 / dia",
+        categoria:"Esportivo"
+    },
+    urus:{
+        name:"Lamborghini Urus",
+        power:"650 cv",
+        consumo:"6,0 km/l",
+        price:"R$ 1800 / dia",
+        categoria:"SUV Esportivo"
+    },
+    bmwX5:{
+        name:"BMW X5",
+        power:"400 cv",
+        consumo:"9,8 km/l",
+        price:"R$ 720 / dia",
+        categoria:"SUV Premium"
+    },
+    audiRS7:{
+        name:"Audi RS7",
+        power:"600 cv",
+        consumo:"7,2 km/l",
+        price:"R$ 1500 / dia",
+        categoria:"Luxo Esportivo"
+    }
+};
+
+function updateTables() {
+    const c1 = document.getElementById("car1").value;
+    const c2 = document.getElementById("car2").value;
+
+    // Atualiza card 1
+    if(c1){
+        document.getElementById("car1Name").textContent = cars[c1].name;
+        document.getElementById("car1Table").innerHTML = `
+            <tr><td><b>Potência:</b></td><td>${cars[c1].power}</td></tr>
+            <tr><td><b>Consumo:</b></td><td>${cars[c1].consumo}</td></tr>
+            <tr><td><b>Categoria:</b></td><td>${cars[c1].categoria}</td></tr>
+            <tr><td><b>Preço:</b></td><td>${cars[c1].price}</td></tr>
+        `;
+    }
+
+    // Atualiza card 2
+    if(c2){
+        document.getElementById("car2Name").textContent = cars[c2].name;
+        document.getElementById("car2Table").innerHTML = `
+            <tr><td><b>Potência:</b></td><td>${cars[c2].power}</td></tr>
+            <tr><td><b>Consumo:</b></td><td>${cars[c2].consumo}</td></tr>
+            <tr><td><b>Categoria:</b></td><td>${cars[c2].categoria}</td></tr>
+            <tr><td><b>Preço:</b></td><td>${cars[c2].price}</td></tr>
+        `;
+    }
+}
+
+document.getElementById("car1").addEventListener("change", updateTables);
+document.getElementById("car2").addEventListener("change", updateTables);
+</script>
+
+</body>
+</html>

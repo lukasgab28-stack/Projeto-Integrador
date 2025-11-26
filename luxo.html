@@ -1,329 +1,128 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CarRent - Luxo</title>
-<style>
-/* ---------------- variables ---------------- */
-:root{
-  --bg:#060606;
-  --card:#0f0f10;
-  --text:#efe9e1;
-  --accent:#d4af37; /* gold */
-  --muted:rgba(255,255,255,.6);
-  --glass: rgba(255,255,255,.03);
-  --glass-2: rgba(212,175,55,.06);
-  --radius:14px;
-  --glow: 0 10px 40px rgba(212,175,55,.12);
-}
-[data-theme="light"]{
-  --bg:#fff;
-  --card:#fbf8f5;
-  --text:#111;
-  --accent:#b5822b;
-  --muted:#666;
-  --glass: rgba(0,0,0,.02);
-  --glass-2: rgba(0,0,0,.03);
-  --glow: 0 12px 40px rgba(181,130,43,.08);
-}
-
-/* ---------------- reset & base ---------------- */
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: linear-gradient(180deg,#020203 0%,var(--bg) 60%);
-  color:var(--text);
-  transition:background .35s, color .35s;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-
-/* ---------------- header ---------------- */
-header{
-  position:fixed;left:0;right:0;top:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;
-  z-index:50;backdrop-filter: blur(6px);
-  background: linear-gradient(180deg, rgba(0,0,0,.12), transparent);
-}
-header h1{
-  color:var(--accent); cursor:pointer; font-weight:700; letter-spacing:.6px;
-  transition: transform .2s, text-shadow .25s;
-}
-header h1:hover{ transform: translateY(-2px); text-shadow: 0 6px 18px rgba(212,175,55,.16); }
-nav a{ color:var(--muted); text-decoration:none; margin-left:18px; font-weight:600; opacity:.95; }
-nav a:hover{ color:var(--accent) }
-
-/* ---------------- layout ---------------- */
-.container{ max-width:1200px; margin:110px auto; padding:0 20px; }
-.hero{
-  display:flex;align-items:center;justify-content:space-between; gap:18px;
-  background: linear-gradient(90deg, rgba(212,175,55,.03), rgba(0,0,0,.08));
-  padding:22px;border-radius:var(--radius);
-  box-shadow: var(--glow);
-}
-.hero h2{ font-size:1.8rem; color:var(--accent); margin:0; font-weight:800 }
-.controls{ display:flex; gap:12px; align-items:center; }
-.controls input{
-  padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.04);
-  background:transparent; color:var(--text); width:260px; outline:none;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
-}
-.controls button{
-  padding:11px 14px;border-radius:12px;border:none;background:linear-gradient(180deg,var(--accent), #b58f2c);
-  font-weight:700; cursor:pointer; color:#000; box-shadow:0 8px 20px rgba(212,175,55,.12);
-  transition: transform .18s, box-shadow .18s;
-}
-.controls button:hover{ transform: translateY(-3px); box-shadow:0 18px 36px rgba(212,175,55,.22) }
-
-/* ---------------- grid & cards ---------------- */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:22px;
-  margin-top:26px;
-}
-
-/* card base */
-.card{
-  position:relative;
-  background: linear-gradient(180deg, rgba(255,255,255,.01), var(--card));
-  border-radius:12px; overflow:hidden; padding:12px; cursor:default;
-  transition: transform .2s ease, box-shadow .25s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,.55);
-  border: 1px solid rgba(255,255,255,.02);
-}
-
-/* hover: raise + gold glow + tilted reflect */
-.card:hover{
-  transform: translateY(-10px) scale(1.02) rotateZ(-0.6deg);
-  box-shadow: 0 30px 70px rgba(212,175,55,.15);
-}
-
-/* image with subtle zoom */
-.card .media{
-  width:100%; height:170px; border-radius:10px; overflow:hidden; position:relative;
-  transition: transform .45s cubic-bezier(.2,.9,.2,1);
-}
-.card img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .45s ease }
-
-/* gold overlay reveal on hover */
-.card::before{
-  content:""; position:absolute; inset:0; pointer-events:none; border-radius:12px;
-  background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,.06) 30%, rgba(212,175,55,.08) 60%, transparent 100%);
-  mix-blend-mode: overlay; opacity:0; transform:translateY(12px);
-  transition: opacity .35s, transform .45s;
-}
-.card:hover::before{ opacity:1; transform:translateY(0) }
-
-/* shimmering gold strip */
-.card .shimmer{
-  position:absolute; left:-60%; top:20%; width:40%; height:120%; transform:skewX(-20deg);
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.18) 50%, rgba(255,255,255,0) 100%);
-  opacity:0; transition: opacity .35s, left .6s;
-  filter: blur(6px);
-}
-.card:hover .shimmer{ left:120%; opacity:.9; transition:left .6s linear }
-
-/* card body */
-.card-body{ padding:12px 6px 6px 6px; display:flex; flex-direction:column; gap:6px; }
-.card h3{ margin:0; font-size:1.05rem; letter-spacing:.2px }
-.price{ color:var(--accent); font-weight:800; font-size:1.05rem; margin-top:4px }
-
-/* gold badge */
-.badge{
-  position:absolute; right:12px; top:12px; padding:6px 10px; border-radius:10px;
-  background: linear-gradient(180deg, rgba(212,175,55,.95), rgba(181,130,43,.95));
-  color:#000; font-weight:800; font-size:.85rem; box-shadow: 0 6px 18px rgba(212,175,55,.18);
-  transform: translateY(0); transition: transform .2s;
-}
-.card:hover .badge{ transform: translateY(-6px) }
-
-/* cta button */
-.btn{
-  display:inline-block; margin-top:8px; padding:10px 12px; border-radius:10px;
-  background:linear-gradient(180deg,var(--accent), #b58f2c); color:#000; text-decoration:none; font-weight:700;
-  transition: transform .16s, box-shadow .16s;
-}
-.btn:hover{ transform: translateY(-4px); box-shadow:0 12px 30px rgba(212,175,55,.16) }
-
-/* ---------------- sparks (generated by JS) ---------------- */
-.spark{
-  position:absolute;
-  width:6px; height:6px; border-radius:50%;
-  pointer-events:none; transform:translate3d(0,0,0);
-  background: radial-gradient(circle at 30% 30%, #fff 0%, rgba(255,255,255,.9) 30%, rgba(212,175,55,1) 60%, rgba(212,175,55,0) 100%);
-  box-shadow: 0 0 6px rgba(212,175,55,.9), 0 0 12px rgba(212,175,55,.5);
-  animation: sparkFly 700ms cubic-bezier(.2,.9,.2,1) forwards;
-  opacity:0;
-}
-@keyframes sparkFly{
-  0%{ opacity:1; transform:translate3d(0,0,0) scale(.6) }
-  100%{ opacity:0; transform:translate3d(var(--dx), var(--dy), 0) scale(.2) }
-}
-
-/* ---------------- small responsive tweaks ---------------- */
-@media (max-width:640px){
-  .hero{ flex-direction:column; align-items:flex-start; gap:12px }
-  .controls input{ width:180px }
-  .card .media{ height:150px }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoMotors | Carros de Luxo</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-theme="dark">
-<header>
-  <h1 id="titleToggle" title="Clique para alternar tema">CarRent</h1>
-  <nav aria-label="Navegação principal"><a href="index.html">Home</a> <a href="suv.html" style="margin-left:12px;color:var(--muted)">SUVs</a></nav>
-</header>
+<body class="page">
+  <header>
+    <div class="container nav" aria-label="Barra de navegação">
+      <div class="logo" aria-label="AutoMotors">
+        <div class="logo-mark" aria-hidden="true">A</div>
+        <span>AutoMotors</span>
+      </div>
+      <nav class="nav-links" aria-label="Seções principais">
+        <a href="index.html">Início</a>
+        <a href="comparacao.html">Comparação</a>
+        <a href="eletrico.html">Elétricos</a>
+        <a href="luxo.html">Luxo</a>
+        <a href="esportivo.html">Esportivos</a>
+        <a href="suv.html">SUVs</a>
+        <a href="conversivel.html">Conversíveis</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="search-bar">
+          <label class="hidden" for="searchInput">Pesquisar carros</label>
+          <input id="searchInput" type="search" placeholder="Buscar carros..." aria-label="Pesquisar carros">
+          <div id="searchResults" class="search-results" role="listbox" aria-label="Resultados da busca"></div>
+        </div>
+        <button id="configBtn" aria-label="Abrir configurações">⚙️</button>
+      </div>
+    </div>
+  </header>
 
-<main class="container" aria-live="polite">
-  <div class="hero" role="banner" aria-label="Veículos de luxo">
-    <h2>Veículos de Luxo — Coleção Premium</h2>
-    <div class="controls" role="search" aria-label="Pesquisar veículos de luxo">
-      <input id="searchL" aria-label="Pesquisar veículos" placeholder="Pesquisar (ex: Rolls, Bentley, Mercedes)" />
-      <button id="searchLb" aria-label="Buscar">Buscar</button>
+  <main class="container section">
+    <div class="category-banner">
+      <p class="tagline">Materiais nobres, silêncio absoluto e performance suave.</p>
+      <h1>Carros de luxo</h1>
+      <p>Sedãs e SUVs com o máximo de conforto, tecnologia embarcada e acabamentos artesanais.</p>
+    </div>
+
+    <p class="intro">Luxo é conforto contínuo: bancos com massagem, som premium, cabine acústica e serviços personalizados durante sua locação.</p>
+
+    <div class="grid">
+      <article class="card" tabindex="0">
+        <img src="img/mercedes-s580.jpg" alt="Mercedes-Benz S 580 preto">
+        <div class="card-meta">
+          <span class="badge">Luxo</span>
+          <span class="price">R$ 1.250/dia</span>
+        </div>
+        <h3>Mercedes-Benz S 580</h3>
+        <p>Bancos com massagem, iluminação ativa e o ápice de silêncio e conforto.</p>
+        <div class="card-actions">
+          <a class="btn" href="luxo/mercedes-s580.html">Alugar</a>
+          <a class="btn ghost" href="luxo/mercedes-s580.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/bmw-740i.jpg" alt="BMW 740i branco">
+        <div class="card-meta">
+          <span class="badge">Luxo</span>
+          <span class="price">R$ 1.050/dia</span>
+        </div>
+        <h3>BMW 740i</h3>
+        <p>Sedã executivo com suspensão a ar, multimídia curva e direção traseira.</p>
+        <div class="card-actions">
+          <a class="btn" href="luxo/bmw-740i.html">Alugar</a>
+          <a class="btn ghost" href="luxo/bmw-740i.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/audi-a8l.jpg" alt="Audi A8L prata">
+        <div class="card-meta">
+          <span class="badge">Luxo</span>
+          <span class="price">R$ 1.100/dia</span>
+        </div>
+        <h3>Audi A8 L</h3>
+        <p>Interior em couro fino, iluminação sofisticada e condução sem ruídos.</p>
+        <div class="card-actions">
+          <a class="btn" href="luxo/audi-a8l.html">Alugar</a>
+          <a class="btn ghost" href="luxo/audi-a8l.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/lexus-ls500.jpg" alt="Lexus LS 500 azul">
+        <div class="card-meta">
+          <span class="badge">Luxo</span>
+          <span class="price">R$ 980/dia</span>
+        </div>
+        <h3>Lexus LS 500</h3>
+        <p>Suavidade híbrida, acabamento artesanal Takumi e assistência completa ao motorista.</p>
+        <div class="card-actions">
+          <a class="btn" href="luxo/lexus-ls500.html">Alugar</a>
+          <a class="btn ghost" href="luxo/lexus-ls500.html">Ver detalhes</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 AutoMotors. Todos os direitos reservados. | <a href="termos.html" aria-label="Termos de uso">Termos de uso</a> | <a href="contato.html" aria-label="Contato">Contato</a></p>
+    </div>
+  </footer>
+
+  <div id="configPanel" class="config-panel" aria-label="Painel de configurações">
+    <div class="config-row">
+      <h3>Configurações</h3>
+      <button id="closeConfig" aria-label="Fechar configurações">✕</button>
+    </div>
+    <div class="config-row">
+      <span>Tema claro/escuro</span>
+      <button id="themeToggle" class="toggle" aria-label="Alternar tema"></button>
+    </div>
+    <div class="config-row">
+      <span>Tamanho do texto</span>
+      <div class="font-controls" aria-label="Ajustar tamanho do texto">
+        <button id="fontDown" aria-label="Diminuir fonte">A-</button>
+        <button id="fontReset" aria-label="Fonte padrão">A</button>
+        <button id="fontUp" aria-label="Aumentar fonte">A+</button>
+      </div>
     </div>
   </div>
 
-  <section class="grid" id="luxGrid" aria-label="Lista de veículos de luxo">
-    <!-- Card 1 -->
-    <article class="card" data-brand="Rolls-Royce" tabindex="0" aria-labelledby="t1">
-      <div class="badge">Premium</div>
-      <div class="media">
-        <img src="img/gho.webp" alt="Rolls-Royce Ghost">
-        <div class="shimmer" aria-hidden="true"></div>
-      </div>
-      <div class="card-body">
-        <h3 id="t1">Rolls-Royce Ghost</h3>
-        <div class="price">R$ 2.200 / dia</div>
-        <a class="btn" href="#">Alugar</a>
-      </div>
-    </article>
-
-    <!-- Card 2 -->
-    <article class="card" data-brand="Bentley" tabindex="0" aria-labelledby="t2">
-      <div class="badge">Luxo</div>
-      <div class="media">
-        <img src="img/cont.webp" alt="Bentley Continental">
-        <div class="shimmer" aria-hidden="true"></div>
-      </div>
-      <div class="card-body">
-        <h3 id="t2">Bentley Continental</h3>
-        <div class="price">R$ 2.100 / dia</div>
-        <a class="btn" href="#">Alugar</a>
-      </div>
-    </article>
-
-    <!-- Card 3 -->
-    <article class="card" data-brand="Mercedes" tabindex="0" aria-labelledby="t3">
-      <div class="badge">Exclusive</div>
-      <div class="media">
-        <img src="img/may.webp" alt="Mercedes-Maybach S">
-        <div class="shimmer" aria-hidden="true"></div>
-      </div>
-      <div class="card-body">
-        <h3 id="t3">Mercedes-Maybach S</h3>
-        <div class="price">R$ 1.950 / dia</div>
-        <a class="btn" href="#">Alugar</a>
-      </div>
-    </article>
-
-    <!-- Add more cards as desired -->
-  </section>
-</main>
-
-<footer style="text-align:center;margin-top:34px;padding:20px;color:var(--muted)">
-  <small>Design premium — substitua imagens por suas assets locais conforme necessário.</small>
-</footer>
-
-<script>
-/* ---------- Tema pelo título (salva no localStorage) ---------- */
-const body = document.body;
-const title = document.getElementById('titleToggle');
-const saved = localStorage.getItem('theme');
-if(saved) body.setAttribute('data-theme', saved);
-title && title.addEventListener('click', ()=>{
-  const now = body.getAttribute('data-theme')==='light' ? 'light' : 'dark';
-  const next = now === 'light' ? 'dark' : 'light';
-  body.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-});
-
-/* ---------- Pesquisa / filtro local ---------- */
-const inL = document.getElementById('searchL');
-const btnL = document.getElementById('searchLb');
-const luxGrid = document.getElementById('luxGrid');
-const luxCards = Array.from(luxGrid.querySelectorAll('.card'));
-
-function doSearch(v){
-  v = String(v||'').trim().toLowerCase();
-  if(!v){ luxCards.forEach(c=>c.style.display=''); return; }
-  let any=false;
-  luxCards.forEach(c=>{
-    const title = (c.querySelector('h3')?.textContent || '').toLowerCase();
-    const brand = (c.dataset.brand || '').toLowerCase();
-    if(title.includes(v) || brand.includes(v)){
-      c.style.display='';
-      any=true;
-    } else {
-      c.style.display='none';
-    }
-  });
-  if(!any){
-    // fallback: volta para index com query (opcional)
-    // location.href = 'index.html?q=' + encodeURIComponent(v);
-  }
-}
-btnL.addEventListener('click', ()=> doSearch(inL.value));
-inL.addEventListener('keydown', e=> { if(e.key==='Enter') doSearch(inL.value); });
-
-/* ---------- Sparks: cria partículas douradas ao hover ---------- */
-function spawnSparks(card, count=10){
-  const rect = card.getBoundingClientRect();
-  for(let i=0;i<count;i++){
-    const s = document.createElement('span');
-    s.className = 'spark';
-    // random start position inside card
-    const x = Math.random()*rect.width;
-    const y = Math.random()*rect.height*0.5 + 10; // upper half
-    s.style.left = `${x}px`;
-    s.style.top = `${y}px`;
-    // random displacement
-    const dx = (Math.random()*160 - 80) + 'px';
-    const dy = (-Math.random()*140 - 40) + 'px';
-    s.style.setProperty('--dx', dx);
-    s.style.setProperty('--dy', dy);
-    card.appendChild(s);
-    // remove after animation
-    s.addEventListener('animationend', ()=> s.remove());
-  }
-}
-
-/* attach listeners to cards */
-luxCards.forEach(card=>{
-  card.addEventListener('mouseenter', ()=> {
-    // small image zoom
-    const img = card.querySelector('img');
-    if(img) img.style.transform = 'scale(1.06) translateZ(0)';
-    // spawn sparks
-    spawnSparks(card, 12);
-  });
-  card.addEventListener('mouseleave', ()=> {
-    const img = card.querySelector('img');
-    if(img) img.style.transform = '';
-  });
-  // accessibility: on focus show sparks too
-  card.addEventListener('focus', ()=> spawnSparks(card,8));
-});
-
-/* keyboard: allow search param from index? (optional) */
-(function prefillFromQuery(){
-  const params = new URLSearchParams(location.search);
-  if(params.has('q')) {
-    const q = params.get('q');
-    inL.value = q;
-    doSearch(q);
-  }
-})();
-</script>
+  <script src="js/main.js"></script>
 </body>
 </html>

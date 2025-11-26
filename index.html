@@ -1,290 +1,198 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CarRent - Home</title>
-
-<style>
-:root{
-  --bg:#ffffff;
-  --text:#111;
-  --card:#f6f6f6;
-  --accent:#ffcc00;
-  --muted:#777;
-}
-[data-theme="dark"]{
-  --bg:#0b0b0b;
-  --text:#fff;
-  --card:#121212;
-  --accent:#ffcc00;
-  --muted:#bbb;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:background .35s,color .35s;
-}
-header{
-  position:fixed;
-  left:0;
-  right:0;
-  top:0;
-  height:72px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 24px;
-  background:var(--bg);
-  border-bottom:1px solid rgba(0,0,0,.06);
-  z-index:30;
-}
-header h1{
-  margin:0;
-  color:var(--accent);
-  cursor:pointer;
-  user-select:none;
-  transition:transform .15s;
-}
-header h1:active{transform:scale(.98)}
-nav a{
-  margin-left:18px;
-  color:var(--text);
-  text-decoration:none;
-}
-
-.container{
-  max-width:1200px;
-  margin:110px auto;
-  padding:0 20px;
-}
-.hero{
-  height:360px;
-  border-radius:12px;
-  background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=60') center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  text-shadow:0 6px 20px rgba(0,0,0,.45)
-}
-.hero h2{font-size:2.4rem;margin:0}
-
-.search-row{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:center;
-  margin:28px 0;
-}
-.search-row input{
-  width:60%;min-width:200px;
-  padding:12px 14px;border-radius:10px;
-  border:1px solid rgba(0,0,0,.08);
-  background:var(--card);color:var(--text);
-  font-size:1rem;
-}
-.search-row button{
-  padding:12px 16px;border-radius:10px;
-  background:var(--accent);border:0;cursor:pointer;
-}
-
-.cards{
-  display:flex;
-  flex-wrap:wrap;
-  gap:24px;
-  justify-content:center;
-  margin-top:12px;
-}
-.card{width:320px;perspective:1000px}
-
-.flip{
-  width:100%;height:380px;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform .8s;
-}
-.card:hover .flip{
-  transform:rotateY(180deg);
-}
-
-.front,.back{
-  position:absolute;
-  inset:0;border-radius:12px;
-  backface-visibility:hidden;
-  overflow:hidden;
-  background:var(--card);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  padding:0;
-}
-
-.front img{
-  width:100%;height:220px;object-fit:cover;
-}
-.front h3{margin:14px 0 6px}
-.back{
-  transform:rotateY(180deg);
-  padding:18px;text-align:center;
-}
-
-.btn{
-  display:inline-block;padding:10px 16px;
-  border-radius:8px;background:var(--accent);
-  color:#000;text-decoration:none;margin-top:12px;
-}
-
-footer{
-  margin-top:60px;padding:24px;
-  background:var(--card);text-align:center;
-  border-top:1px solid rgba(0,0,0,.04);
-}
-
-.theme-btn{
-  background:transparent;border:0;
-  font-size:18px;cursor:pointer;
-}
-
-@media (max-width:800px){
-  .search-row input{width:100%}
-  .card{width:90%}
-  .hero{height:220px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoMotors | Início</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
-<body data-theme="light">
-
-<header>
-  <h1 id="titleToggle">CarRent</h1>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="esportivo.html">Esportivos</a>
-    <a href="suv.html">SUVs</a>
-    <a href="luxo.html">Luxo</a>
-    <a href="financiamento.html">Financiamento</a>
-    <a href="comparar.html">Comparar</a>
-  </nav>
-
-  <button id="themeToggle" class="theme-btn" aria-label="alternar tema">🌞</button>
-</header>
-
-<main class="container">
-
-  <section class="hero">
-    <h2>Alugue o carro dos seus sonhos</h2>
-  </section>
-
-  <div class="search-row">
-    <input id="searchInput" placeholder="Pesquisar (ex: esportivo, suv, luxo, ferrari, porsche)"/>
-    <button id="searchBtn">Buscar</button>
+<body class="page">
+  <div class="splash" aria-label="Tela de abertura">
+    <div class="solar-system" aria-hidden="true">
+      <div class="sun"></div>
+      <div class="orbit o1"><div class="planet"></div></div>
+      <div class="orbit o2"><div class="planet"></div></div>
+      <div class="orbit o3"><div class="planet"><div class="moon"></div></div></div>
+      <div class="orbit o4"><div class="planet"></div></div>
+      <div class="orbit o5"><div class="planet"><div class="moon"></div></div></div>
+    </div>
+    <div class="splash-blob" aria-hidden="true"></div>
+    <div class="splash-blob blob-2" aria-hidden="true"></div>
+    <div class="splash-ring ring-1" aria-hidden="true"></div>
+    <div class="splash-ring ring-2" aria-hidden="true"></div>
+    <div class="splash-veil" aria-hidden="true"></div>
+    <div class="splash-mist" aria-hidden="true"></div>
+    <div class="splash-ripples" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="splash-trails" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="splash-particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="splash-logo">AutoMotors <span class="splash-sub">Performance + Tecnologia</span></div>
   </div>
 
-  <section class="cards" id="cardGrid">
-    <!-- ESPORTIVO -->
-    <div class="card" data-type="esportivo">
-      <div class="flip">
-        <div class="front">
-          <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=60">
-          <h3>Esportivo</h3>
-          <p style="color:var(--muted)">A partir de R$ 299/dia</p>
+  <header>
+    <div class="container nav" aria-label="Barra de navegação">
+      <div class="logo" aria-label="AutoMotors">
+        <div class="logo-mark" aria-hidden="true">A</div>
+        <span>AutoMotors</span>
+      </div>
+      <nav class="nav-links" aria-label="Seções principais">
+        <a href="index.html">Início</a>
+        <a href="comparacao.html">Comparação</a>
+        <a href="eletrico.html">Elétricos</a>
+        <a href="luxo.html">Luxo</a>
+        <a href="esportivo.html">Esportivos</a>
+        <a href="suv.html">SUVs</a>
+        <a href="conversivel.html">Conversíveis</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="search-bar">
+          <label class="hidden" for="searchInput">Pesquisar carros</label>
+          <input id="searchInput" type="search" placeholder="Buscar carros..." aria-label="Pesquisar carros">
+          <div id="searchResults" class="search-results" role="listbox" aria-label="Resultados da busca"></div>
         </div>
-        <div class="back">
-          <h3>Esportivo</h3>
-          <p>Alta performance e adrenalina.</p>
-          <a class="btn" href="esportivo.html">Ver Esportivos</a>
-        </div>
+        <button id="configBtn" aria-label="Abrir configurações">⚙️</button>
       </div>
     </div>
+  </header>
 
-    <!-- SUV -->
-    <div class="card" data-type="suv">
-      <div class="flip">
-        <div class="front">
-          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1200&q=60">
-          <h3>SUV</h3>
-          <p style="color:var(--muted)">A partir de R$ 199/dia</p>
+  <main>
+    <section class="container hero" aria-labelledby="hero-title">
+      <div class="hero-text">
+        <div class="hero-badge" aria-hidden="true">Mobilidade premium</div>
+        <h1 id="hero-title">A nova energia do aluguel de carros</h1>
+        <p>Escolha entre elétricos, esportivos, SUVs, conversíveis e luxo. Tecnologia, conforto e desempenho com reserva rápida.</p>
+        <div class="cta-row">
+          <a class="btn" href="comparacao.html">Comparar modelos</a>
+          <a class="btn secondary" href="eletrico.html">Ver elétricos</a>
         </div>
-        <div class="back">
-          <h3>SUV</h3>
-          <p>Conforto e espaço para toda a família.</p>
-          <a class="btn" href="suv.html">Ver SUVs</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- LUXO -->
-    <div class="card" data-type="luxo">
-      <div class="flip">
-        <div class="front">
-          <img src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=60">
-          <h3>Luxo</h3>
-          <p style="color:var(--muted)">A partir de R$ 499/dia</p>
-        </div>
-        <div class="back">
-          <h3>Luxo</h3>
-          <p>Exclusividade, conforto e requinte.</p>
-          <a class="btn" href="luxo.html">Ver Luxo</a>
+        <div class="pill-bar" aria-hidden="true">
+          <span class="pill">Sem burocracia</span>
+          <span class="pill">Retire em 10 minutos</span>
+          <span class="pill">Suporte 24/7</span>
         </div>
       </div>
+      <div class="hero-visual" aria-label="Carro em destaque">
+        <img src="https://placehold.co/600x380/png?text=AutoMotors" alt="Carro conceito AutoMotors">
+      </div>
+    </section>
+
+    <section class="container section" aria-labelledby="cat-title">
+      <h2 id="cat-title">Categorias em destaque</h2>
+      <p class="lead">Selecione a vibe certa para sua viagem: potência, eficiência ou puro conforto.</p>
+      <div class="grid">
+        <article class="card" tabindex="0">
+          <img src="img/tesla-model-3.jpg" alt="Tesla Model 3 branco">
+          <div class="card-meta">
+            <span class="badge">Elétrico</span>
+            <span class="price">R$ 420/dia</span>
+          </div>
+          <h3>Tesla Model 3</h3>
+          <p>Zero emissões, 480 km de alcance e piloto automático para viagens tranquilas.</p>
+          <div class="card-actions">
+            <a class="btn" href="eletrico/tesla-model-3.html">Alugar</a>
+            <a class="btn ghost" href="eletrico/tesla-model-3.html">Ver detalhes</a>
+          </div>
+        </article>
+        <article class="card" tabindex="0">
+          <img src="img/porsche-911-carrera-s.jpg" alt="Porsche 911 Carrera S prata">
+          <div class="card-meta">
+            <span class="badge">Esportivo</span>
+            <span class="price">R$ 1.150/dia</span>
+          </div>
+          <h3>Porsche 911 Carrera S</h3>
+          <p>Ícone absoluto com aceleração brutal e equilíbrio perfeito de chassi.</p>
+          <div class="card-actions">
+            <a class="btn" href="esportivo/porsche-911-carrera-s.html">Alugar</a>
+            <a class="btn ghost" href="esportivo/porsche-911-carrera-s.html">Ver detalhes</a>
+          </div>
+        </article>
+        <article class="card" tabindex="0">
+          <img src="img/range-rover-sport.jpg" alt="Range Rover Sport preta">
+          <div class="card-meta">
+            <span class="badge">SUV</span>
+            <span class="price">R$ 950/dia</span>
+          </div>
+          <h3>Range Rover Sport</h3>
+          <p>SUV de luxo com tração impecável, cabine silenciosa e presença imbatível.</p>
+          <div class="card-actions">
+            <a class="btn" href="suv/range-rover-sport.html">Alugar</a>
+            <a class="btn ghost" href="suv/range-rover-sport.html">Ver detalhes</a>
+          </div>
+        </article>
+        <article class="card" tabindex="0">
+          <img src="img/mercedes-s580.jpg" alt="Mercedes-Benz S 580 preto">
+          <div class="card-meta">
+            <span class="badge">Luxo</span>
+            <span class="price">R$ 1.250/dia</span>
+          </div>
+          <h3>Mercedes-Benz S 580</h3>
+          <p>Sedã referência de conforto, tecnologia de ponta e bancos com massagem.</p>
+          <div class="card-actions">
+            <a class="btn" href="luxo/mercedes-s580.html">Alugar</a>
+            <a class="btn ghost" href="luxo/mercedes-s580.html">Ver detalhes</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section" aria-labelledby="reasons">
+      <h2 id="reasons">Por que a AutoMotors?</h2>
+      <p class="lead">Tecnologia e experiência lado a lado para você dirigir melhor.</p>
+      <div class="metrics">
+        <div class="metric-card">
+          <strong>Reserva fluida</strong>
+          <span class="tagline">Check-in digital, sem papelada.</span>
+        </div>
+        <div class="metric-card">
+          <strong>Segurança reforçada</strong>
+          <span class="tagline">Assistentes de condução em toda a frota.</span>
+        </div>
+        <div class="metric-card">
+          <strong>Suporte 24/7</strong>
+          <span class="tagline">Equipe pronta em qualquer canal.</span>
+        </div>
+        <div class="metric-card">
+          <strong>Planos flexíveis</strong>
+          <span class="tagline">Alugue por dia, semana ou mês.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 AutoMotors. Todos os direitos reservados. | <a href="termos.html" aria-label="Termos de uso">Termos de uso</a> | <a href="contato.html" aria-label="Contato">Contato</a></p>
     </div>
+  </footer>
 
-  </section>
+  <div id="configPanel" class="config-panel" aria-label="Painel de configurações">
+    <div class="config-row">
+      <h3>Configurações</h3>
+      <button id="closeConfig" aria-label="Fechar configurações">✕</button>
+    </div>
+    <div class="config-row">
+      <span>Tema claro/escuro</span>
+      <button id="themeToggle" class="toggle" aria-label="Alternar tema"></button>
+    </div>
+    <div class="config-row">
+      <span>Tamanho do texto</span>
+      <div class="font-controls" aria-label="Ajustar tamanho do texto">
+        <button id="fontDown" aria-label="Diminuir fonte">A-</button>
+        <button id="fontReset" aria-label="Fonte padrão">A</button>
+        <button id="fontUp" aria-label="Aumentar fonte">A+</button>
+      </div>
+    </div>
+  </div>
 
-</main>
-
-<footer>
-  <small>© CarRent — Todos os direitos reservados</small>
-</footer>
-
-<script>
-// THEME SWITCH
-const body=document.body;
-const title=document.getElementById('titleToggle');
-const tbtn=document.getElementById('themeToggle');
-const saved=localStorage.getItem('theme');
-if(saved){ body.setAttribute('data-theme',saved); tbtn.textContent=saved==='dark'?'🌜':'🌞'; }
-title.addEventListener('click',toggleTheme);
-tbtn.addEventListener('click',toggleTheme);
-function toggleTheme(){
-  const current=body.getAttribute('data-theme');
-  const next=current==='dark'?'light':'dark';
-  body.setAttribute('data-theme',next);
-  localStorage.setItem('theme',next);
-  tbtn.textContent=next==='dark'?'🌜':'🌞';
-}
-
-// SEARCH
-const input=document.getElementById('searchInput');
-const btn=document.getElementById('searchBtn');
-const cards=document.querySelectorAll('#cardGrid .card');
-
-function doSearch(q){
-  q=q.trim().toLowerCase();
-  if(!q){ cards.forEach(c=>c.style.display=''); return; }
-
-  if(q.includes('esport')) return location.href='esportivo.html?q='+encodeURIComponent(q);
-  if(q.includes('suv')) return location.href='suv.html?q='+encodeURIComponent(q);
-  if(q.includes('lux')) return location.href='luxo.html?q='+encodeURIComponent(q);
-
-  let any=false;
-  cards.forEach(c=>{
-    let t=c.querySelector('h3').textContent.toLowerCase();
-    if(t.includes(q)){ c.style.display=''; any=true; }
-    else c.style.display='none';
-  });
-
-  if(!any) location.href='esportivo.html?q='+encodeURIComponent(q);
-}
-
-btn.addEventListener('click',()=>doSearch(input.value));
-input.addEventListener('keydown',(e)=>{ if(e.key==='Enter') doSearch(input.value); });
-</script>
+  <script src="js/main.js"></script>
 </body>
 </html>

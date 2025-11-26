@@ -1,239 +1,128 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CarRent - SUVs (Edição Agressiva)</title>
-<style>
-:root{
-  --bg:#0a0a0c;
-  --card:#111216;
-  --text:#e5e5e5;
-  --accent:#c0c0c0;
-  --muted:rgba(255,255,255,.55);
-  --metal:#9ea7b8;
-  --glow:0 0 18px rgba(150,150,255,.45);
-}
-[data-theme="light"]{
-  --bg:#ffffff;
-  --card:#f6f6f7;
-  --text:#111;
-  --accent:#3b3b3b;
-  --muted:#666;
-  --metal:#8a8a8a;
-  --glow:0 0 14px rgba(120,120,120,.35);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:all .4s ease;
-}
-header{
-  position:fixed;
-  left:0;right:0;top:0;
-  height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 26px;
-  backdrop-filter:blur(12px);
-  background:rgba(0,0,0,.25);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  z-index:50;
-}
-header h1{
-  margin:0;
-  color:var(--accent);
-  cursor:pointer;
-  letter-spacing:1px;
-  transition: .3s;
-}
-header h1:hover{
-  text-shadow:0 0 12px var(--accent);
-}
-nav a{
-  margin-left:20px;
-  color:var(--text);
-  text-decoration:none;
-  font-weight:500;
-  transition:.3s;
-}
-nav a:hover{color:var(--accent)}
-.container{
-  max-width:1250px;
-  margin:120px auto;
-  padding:0 26px;
-}
-.hero{
-  height:185px;
-  border-radius:14px;
-  background:linear-gradient(120deg,#1a1c20,#0d0e10);
-  border:1px solid #2a2d31;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:22px;
-  box-shadow:0 0 22px rgba(80,80,140,.25);
-}
-.hero h2{
-  margin:0;
-  font-size:2rem;
-  text-transform:uppercase;
-  letter-spacing:2px;
-}
-.controls{
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-.controls input{
-  padding:12px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.08);
-  background:#0e0f11;
-  color:var(--text);
-  width:200px;
-}
-.controls button{
-  padding:12px 14px;
-  border-radius:10px;
-  background:var(--metal);
-  border:none;
-  cursor:pointer;
-  transition:.3s;
-}
-.controls button:hover{
-  box-shadow:var(--glow);
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-  gap:26px;
-  margin-top:22px;
-}
-.card{
-  background:var(--card);
-  border-radius:14px;
-  padding:14px;
-  overflow:hidden;
-  box-shadow:0 0 18px rgba(0,0,0,.55);
-  transition: transform .25s ease, box-shadow .25s ease, rotate .25s ease;
-  position:relative;
-}
-.card:hover{
-  transform:translateY(-10px) scale(1.05);
-  rotate:-1.8deg;
-  box-shadow:0 0 25px rgba(120,140,255,.45);
-}
-.card::after{
-  content:"";
-  position:absolute;
-  top:0;left:0;right:0;
-  height:4px;
-  background:linear-gradient(90deg,#c7c7d9,#51546a,#c7c7d9);
-  opacity:.25;
-}
-.card:hover::after{
-  opacity:1;
-  box-shadow:0 0 22px rgba(150,150,255,.65);
-}
-.card img{
-  width:100%;
-  height:170px;
-  object-fit:cover;
-  border-radius:10px;
-  transition:.3s;
-}
-.card:hover img{
-  filter:brightness(1.2) contrast(1.1);
-}
-.card-body{padding-top:12px}
-.card h3{margin:0;font-size:1.1rem;letter-spacing:.5px}
-.price{color:var(--metal);font-weight:700;margin-top:6px;font-size:1rem}
-.btn{
-  display:inline-block;
-  margin-top:12px;
-  padding:10px 14px;
-  border-radius:8px;
-  background:var(--metal);
-  color:#000;
-  text-decoration:none;
-  font-weight:600;
-  transition:.3s;
-}
-.btn:hover{
-  box-shadow:0 0 18px rgba(180,200,255,.6);
-}
-footer{
-  margin-top:36px;
-  padding:20px;
-  text-align:center;
-  color:var(--muted);
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoMotors | SUVs</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-theme="dark">
-<header>
-  <h1 id="titleToggle">CarRent</h1>
-  <nav><a href="index.html">Home</a></nav>
-</header>
+<body class="page">
+  <header>
+    <div class="container nav" aria-label="Barra de navegação">
+      <div class="logo" aria-label="AutoMotors">
+        <div class="logo-mark" aria-hidden="true">A</div>
+        <span>AutoMotors</span>
+      </div>
+      <nav class="nav-links" aria-label="Seções principais">
+        <a href="index.html">Início</a>
+        <a href="comparacao.html">Comparação</a>
+        <a href="eletrico.html">Elétricos</a>
+        <a href="luxo.html">Luxo</a>
+        <a href="esportivo.html">Esportivos</a>
+        <a href="suv.html">SUVs</a>
+        <a href="conversivel.html">Conversíveis</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="search-bar">
+          <label class="hidden" for="searchInput">Pesquisar carros</label>
+          <input id="searchInput" type="search" placeholder="Buscar carros..." aria-label="Pesquisar carros">
+          <div id="searchResults" class="search-results" role="listbox" aria-label="Resultados da busca"></div>
+        </div>
+        <button id="configBtn" aria-label="Abrir configurações">⚙️</button>
+      </div>
+    </div>
+  </header>
 
-<main class="container">
-  <div class="hero">
-    <h2>SUVs — Metal Edition</h2>
-    <div class="controls">
-      <input id="searchBox" placeholder="Pesquisar SUV..." />
-      <button id="searchBtn">Buscar</button>
+  <main class="container section">
+    <div class="category-banner">
+      <p class="tagline">Espaço, segurança e versatilidade para qualquer roteiro.</p>
+      <h1>SUVs</h1>
+      <p>Modelos com altura, posição de dirigir elevada e tecnologia para encarar estrada ou cidade com conforto.</p>
+    </div>
+
+    <p class="intro">SUVs são perfeitos para família, viagens longas e quem quer segurança extra com tração inteligente e porta-malas generoso.</p>
+
+    <div class="grid">
+      <article class="card" tabindex="0">
+        <img src="img/range-rover-sport.jpg" alt="Range Rover Sport preto">
+        <div class="card-meta">
+          <span class="badge">SUV</span>
+          <span class="price">R$ 950/dia</span>
+        </div>
+        <h3>Range Rover Sport</h3>
+        <p>Luxo e robustez com suspensão a ar, direção nas quatro rodas e off-road real.</p>
+        <div class="card-actions">
+          <a class="btn" href="suv/range-rover-sport.html">Alugar</a>
+          <a class="btn ghost" href="suv/range-rover-sport.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/volvo-xc90-recharge.jpg" alt="Volvo XC90 Recharge branco">
+        <div class="card-meta">
+          <span class="badge">SUV</span>
+          <span class="price">R$ 820/dia</span>
+        </div>
+        <h3>Volvo XC90 Recharge</h3>
+        <p>Híbrido plug-in de 455 cv, sete lugares e a segurança sueca de referência.</p>
+        <div class="card-actions">
+          <a class="btn" href="suv/volvo-xc90-recharge.html">Alugar</a>
+          <a class="btn ghost" href="suv/volvo-xc90-recharge.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/bmw-x5-xdrive45e.jpg" alt="BMW X5 xDrive45e prata">
+        <div class="card-meta">
+          <span class="badge">SUV</span>
+          <span class="price">R$ 870/dia</span>
+        </div>
+        <h3>BMW X5 xDrive45e</h3>
+        <p>Híbrido plug-in com até 77 km elétricos, tração xDrive e cabine espaçosa.</p>
+        <div class="card-actions">
+          <a class="btn" href="suv/bmw-x5-xdrive45e.html">Alugar</a>
+          <a class="btn ghost" href="suv/bmw-x5-xdrive45e.html">Ver detalhes</a>
+        </div>
+      </article>
+      <article class="card" tabindex="0">
+        <img src="img/toyota-rav4-hybrid.jpg" alt="Toyota RAV4 Hybrid azul">
+        <div class="card-meta">
+          <span class="badge">SUV</span>
+          <span class="price">R$ 520/dia</span>
+        </div>
+        <h3>Toyota RAV4 Hybrid</h3>
+        <p>Híbrido confiável, 4x4 inteligente e consumo baixo para viagens longas.</p>
+        <div class="card-actions">
+          <a class="btn" href="suv/toyota-rav4-hybrid.html">Alugar</a>
+          <a class="btn ghost" href="suv/toyota-rav4-hybrid.html">Ver detalhes</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 AutoMotors. Todos os direitos reservados. | <a href="termos.html" aria-label="Termos de uso">Termos de uso</a> | <a href="contato.html" aria-label="Contato">Contato</a></p>
+    </div>
+  </footer>
+
+  <div id="configPanel" class="config-panel" aria-label="Painel de configurações">
+    <div class="config-row">
+      <h3>Configurações</h3>
+      <button id="closeConfig" aria-label="Fechar configurações">✕</button>
+    </div>
+    <div class="config-row">
+      <span>Tema claro/escuro</span>
+      <button id="themeToggle" class="toggle" aria-label="Alternar tema"></button>
+    </div>
+    <div class="config-row">
+      <span>Tamanho do texto</span>
+      <div class="font-controls" aria-label="Ajustar tamanho do texto">
+        <button id="fontDown" aria-label="Diminuir fonte">A-</button>
+        <button id="fontReset" aria-label="Fonte padrão">A</button>
+        <button id="fontUp" aria-label="Aumentar fonte">A+</button>
+      </div>
     </div>
   </div>
 
-  <section class="grid" id="suvGrid">
-    <article class="card" data-brand="Toyota">
-       <img src="img/sw.webp" alt="Toyota SW4">
-      <div class="card-body">
-        <h3>Toyota SW4</h3>
-        <div class="price">R$ 480 / dia</div>
-        <a class="btn" href="#">Alugar</a>
-      </div>
-    </article>
-
-    <article class="card" data-brand="BMW">
-      <img src="img/bm.webp" alt="BMW X5">
-      <div class="card-body">
-        <h3>BMW X5</h3>
-        <div class="price">R$ 720 / dia</div>
-        <a class="btn" href="bmw-x5.html">Alugar</a>
-      </div>
-    </article>
-
-    <article class="card" data-brand="Audi">
-     <img src="img/q7.webp" alt="Audi Q7">
-      <div class="card-body">
-        <h3>Audi Q7</h3>
-        <div class="price">R$ 650 / dia</div>
-        <a class="btn" href="#">Alugar</a>
-      </div>
-    </article>
-  </section>
-</main>
-
-<footer>
-  <small>Página SUV — Metallic Glow Edition</small>
-</footer>
-
-<script>
-const body=document.body;
-const title=document.getElementById('titleToggle');
-const saved=localStorage.getItem('theme');
-if(saved) body.setAttribute('data-theme', saved);
-title.addEventListener('click',()=>{
-  const now=body.getAttribute('data-theme');
-  const next=now==='dark'?'light':'dark';
-  body.setAttribute('data-theme',next);
-  localStorage.setItem('theme',next);
-});
-
-const sb=document.getElementById('searchBox');
+  <script src="js/main.js"></script>
+</body>
+</html>
